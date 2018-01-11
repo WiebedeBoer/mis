@@ -135,6 +135,20 @@ $Allowlogin = 11;
 
 }
 else {
+    //Brutecheck
+    
+    $bquery = "INSERT INTO BRUTE (User) VALUES ('rawr')";
+    $bch = $conn->prepare($bquery);
+    $bch->bind_param('s', $username);
+    $bch->execute();
+    $bch->close();
+    if ($bch->affected_rows == 0){
+        $buquery = "UPDATE Brute SET tries = tries + 1 WHERE User = 'rawr'";
+        $buch = $conn->prepare($buquery);
+        $buch->bind_param('s', $username);
+        $buch->execute();
+        $buch->close(); 
+    }
 $Allowlogin = 10;
 }
 
