@@ -198,10 +198,21 @@ $movor = $_POST["moveup"];
 
 if (filter_var($_POST["moveit"], FILTER_VALIDATE_INT)){
 $movit = $_POST["moveit"];
-
+/*
 $resultcocat = mysql_query("SELECT COUNT(*) AS catcount FROM Webcontent WHERE ID ='$movit'");
 $rowcocat = mysql_fetch_array($resultcocat);
 $catcheck = $rowcocat['catcount'];
+*/
+
+$cocatquery = "SELECT COUNT(*) AS catcheck FROM Webcontent WHERE ID = ?";
+$cocatid = $conn->prepare($cocatquery);
+$cocatid->bind_param('i', $movit);
+$cocatid->execute();
+$cocatid->bind_result($catcheck);
+$cocatid->fetch();
+$cocatid->close();
+
+
 if ($catcheck ==1){
 /*
 mysql_query("UPDATE Webcontent SET Volgorde ='$movor' WHERE ID ='$movit'");
@@ -274,7 +285,7 @@ echo '<tr>';
 
 
 
-if ($url =="extra.php?extra="){
+if ($weburl =="extra.php?extra="){
 echo '<td><A HREF="../extra.php?extra='.$webid.'" TARGET="_blank">'.$webname.'</A></td>';
 }
 else {
