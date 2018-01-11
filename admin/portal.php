@@ -118,8 +118,8 @@ $ranchl = substr($chars,$rl,1);
 
 $makekey = $rancha.$ranchb.$ranchc.$ranchd.$ranche.$ranchf.$ranchg.$ranchh.$ranchi.$ranchj.$ranchk.$ranchl;
 
-setcookie("person", $username, time()+43200, "/admin/");
-setcookie("keys", $makekey, time()+43200, "/admin/");
+setcookie("person", $username, time()+43200);
+setcookie("keys", $makekey, time()+43200);
 
 //UPDATING USER KEY
 //mysql_query("UPDATE Users SET Cokey ='$makekey' WHERE Username ='$username'");
