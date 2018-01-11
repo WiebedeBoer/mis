@@ -38,13 +38,28 @@ $new_pass = $_POST["newpass"];
 
 if ($new_pass_check =="$new_pass"){
 
+/*
 $resultcp = mysql_query("SELECT * FROM Users WHERE Username ='$you'");
 $rowcp = mysql_fetch_array($resultcp);
 $tab_old_pw = $rowcp['Password'];
+*/
+
+$ccquery = "SELECT Password FROM Users WHERE Username = ?";
+$cid = $conn->prepare($ccquery);
+$cid->bind_param('s', $you);
+$cid->execute();
+$cid->bind_result($tab_old_pw);
+$cid->close();
 
 if ($tab_old_pw =="$old_pass"){
-
+/*
 mysql_query("UPDATE Users SET Password ='$new_pass' WHERE Username ='$you'");
+*/
+$upquery = "UPDATE Users SET Password = ? WHERE Username = ?";
+$upid = $conn->prepare($upquery);
+$upid->bind_param('ss', $new_pass, $you);
+$upid->execute();
+$upid->close();
 
 echo "<P>Wachtwoord is gewijzigd</P>";
 
@@ -107,16 +122,38 @@ $deletedgroep = $_POST["deletion"];
 
 if(filter_var($deletedgroep, FILTER_VALIDATE_INT)){
 
+
+$ccquery = "SELECT COUNT(*) AS catcheck FROM Users WHERE ID = ?";
+$cid = $conn->prepare($ccquery);
+$cid->bind_param('i', $deletedgroep);
+$cid->execute();
+$cid->bind_result($catcheck);
+$cid->close();
+
+/*
 $resultcocat = mysql_query("SELECT COUNT(*) AS catcount FROM Users WHERE ID ='$deletedgroep'");
 $rowcocat = mysql_fetch_array($resultcocat);
 $catcheck = $rowcocat['catcount'];
+*/
 if ($catcheck ==1){
 
+/*
 $resultco = mysql_query("SELECT * FROM Users WHERE ID ='$deletedgroep'");
 $rowco = mysql_fetch_array($resultco);
 $d_user = $rowco['Username'];
+*/
 
+/*
 mysql_query("DELETE FROM Users WHERE ID ='$deletedgroep'");
+*/
+
+$dequery = "DELETE FROM Users WHERE ID = ?";
+$did = $conn->prepare($dequery);
+$did->bind_param('i', $deletedgroep);
+$did->execute();
+$did->close();
+
+
 echo "<P>Gebruiker is verwijderd</P>";
 
 }
@@ -152,9 +189,15 @@ $newuser = $_POST["username"];
 $newusertype = $_POST["usertype"];
 
 $newpassword = $_POST["userpass"];
-
+/*
 mysql_query("INSERT INTO Users (Username, Password, Category)
 VALUES ('$newuser', '$newpassword', '$newusertype')");
+*/
+$iquery = "INSERT INTO Users (Username, Password, Category) VALUES ('?, ?, ?)";
+$iid = $conn->prepare($iquery);
+$iid->bind_param('sss', $newuser, $newpassword, $newusertype);
+$iid->execute();
+$iid->close();
 
 echo "<P>Gebruiker is toegevoegd</P>";
 
@@ -206,13 +249,29 @@ $newgroup = $_POST["group"];
 $usersid = $_POST["user"];
 
 if(filter_var($usersid, FILTER_VALIDATE_INT)){
-
+/*
 $resultcocat = mysql_query("SELECT COUNT(*) AS catcount FROM Users WHERE ID ='$usersid'");
 $rowcocat = mysql_fetch_array($resultcocat);
 $catcheck = $rowcocat['catcount'];
-if ($catcheck ==1){
+*/
+$ccquery = "SELECT COUNT(*) AS catcount FROM Users WHERE ID = ?";
+$cid = $conn->prepare($ccquery);
+$cid->bind_param('i', $usersid);
+$cid->execute();
+$cid->bind_result($catcheck);
+$cid->close();
 
+if ($catcheck ==1){
+/*
 mysql_query("UPDATE Users SET Category ='$newgroup' WHERE ID ='$usersid'");
+*/
+$upquery = "UPDATE Users SET Category = ? WHERE ID = ?";
+$upid = $conn->prepare($upquery);
+$upid->bind_param('si', $newgroup, $usersid);
+$upid->execute();
+$upid->close();
+
+
 echo "<P>Gebruiker is gewijzigd</P>";
 
 }
@@ -261,18 +320,35 @@ echo "<FORM method='post' action='users.php'>
 
 
 /*gebruiker wijzigen formulier*/
+
+/*
 $resultcocat = mysql_query("SELECT COUNT(*) AS catcount FROM Users WHERE Category <>'superadmin'");
 $rowcocat = mysql_fetch_array($resultcocat);
 $catcheck = $rowcocat['catcount'];
+*/
+
+$cocatquery = "SELECT COUNT(*) AS catcheck FROM Users WHERE Category <>'superadmin'";
+$cocatid = $conn->prepare($cocatquery);
+$cocatid->execute();
+$cocatid->bind_result($catcheck);
+$cocatid->close();
+
+
 if ($catcheck >=1){
 echo "<FORM method='post' action='users.php'>
 <P><B>Gebruikerstype wijzigen</B>
 <BR>Gebruiker: <select name='user'>";
+/*
 $resultpho = mysql_query("SELECT * FROM Users WHERE Category <>'superadmin' ORDER BY Username");
 while ($rowpho = mysql_fetch_array($resultpho))
+*/
+$lquery = "SELECT * FROM Users WHERE Category <>'superadmin' ORDER BY Username";
+$result_pagg = $conn->query($lquery);
+while ($rowpag = $result_pagg->fetch_assoc())
   {
-$userid = $rowpho['ID'];
-$usernaam = $rowpho['Username'];
+$userid = $rowpag['ID'];
+$usernaam = $rowpag['Username'];
+
 echo "<option value='".$userid."'>".$usernaam."</option>";
   }
 echo "</select>";
@@ -290,9 +366,16 @@ echo "<input type='submit' value='wijzig'></P></FORM>";
 if ($catcheck >=1){
 echo "<table border='0' class='tabel'>
 <tr><th>Gebruikersnaam</th><th>Gebruikerstype</th><th>Wachtwoord</th><th>Verwijderknop</th></tr>";
+/*
 $resultpho = mysql_query("SELECT * FROM Users ORDER BY Username");
 while ($rowpho = mysql_fetch_array($resultpho))
   {
+*/
+
+$mquery = "SELECT * FROM Users ORDER BY Username";
+$result_pagf = $conn->query($mquery);
+while ($rowpho = $result_pagf->fetch_assoc())
+ {
 $userid = $rowpho['ID'];
 $usernaam = $rowpho['Username'];
 $usertyp = $rowpho['Category'];

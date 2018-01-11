@@ -10,29 +10,23 @@ include("head.php");
 
 echo '<a href="beheer.php" title="Beheer" class="bl">Terug naar Beheer</a>';
 
-if (isset($_GET['ding'])) {
-if(filter_var($_GET["ding"], FILTER_VALIDATE_INT)){
-$item = $_GET["ding"];
-
 include("connect.php");
 if ($connected ==1){
 
-echo '<a href="objecten.php?object='.$item.'" title="monument" class="bl">Terug naar Monument</a>';
-
-$resultitco = mysql_query("SELECT COUNT(*) AS coit FROM Monumenten WHERE ID ='$item'");
-$rowitco = mysql_fetch_array($resultitco);
-$itemcheck = $rowitco['coit'];
-
-if ($itemcheck ==1){
-
-$resultwco = mysql_query ("SELECT COUNT(*) AS dingcount FROM Pictures WHERE Monument ='$item'");
-$rowwco = mysql_fetch_assoc($resultwco);
-$dir_check = $rowwco['dingcount'];
-
+/*
 $resultpicco = mysql_query ("SELECT MAX(ID) AS picmax FROM Pictures");
 $rowpicco = mysql_fetch_assoc($resultpicco);
 $pic_check = $rowpicco['picmax'];
 $max_pic = $pic_check + 1;
+*/
+
+$wquery = "SELECT MAX(ID) AS picmax FROM Pictures";
+$wid = $conn->prepare($wquery);
+$wid->execute();
+$wid->bind_result($picmax);
+$wid->fetch();
+$wid->close();
+$max_pic = $picmax + 1;
 
 //allowed file types
 if (($_FILES["file"]["type"] == "image/gif") || ($_FILES["file"]["type"] == "image/pjpeg") || ($_FILES["file"]["type"] == "image/jpeg") || ($_FILES["file"]["type"] == "image/jpg") || ($_FILES["file"]["type"] == "image/PJPEG") || ($_FILES["file"]["type"] == "image/JPEG") || ($_FILES["file"]["type"] == "image/JPG") || ($_FILES["file"]["type"] == "image/png") || ($_FILES["file"]["type"] == "image/x-png")){
@@ -46,8 +40,63 @@ echo '<P class="error">Foutmelding Code: ' . $_FILES["file"]["error"] . '</P>';
 }
 else {
 
-$dirpath = $_SERVER['DOCUMENT_ROOT']."/pictures/";
+//$dirpath = $_SERVER['DOCUMENT_ROOT']."/pictures/";
 
+//get attributes
+echo "<P>Temp file: ". $_FILES["file"]["tmp_name"] ."</P>";
+echo "<P>Bestandstype: ". $_FILES["file"]["type"] ."</P>";
+echo "<P>Grootte: ". round(($_FILES["file"]["size"] / 1024),2) ." Kb</P>";
+list($lwidth, $lheight, $ftype, $attr) = getimagesize($_FILES["file"]["tmp_name"]);
+$imgsize = round(($_FILES["file"]["size"] / 1024));
+//copy
+
+//gif
+if($filetype == "image/gif"){
+//$image = imagecreatefromgif($imagesource);
+move_uploaded_file($_FILES["file"]["tmp_name"], $_SERVER['DOCUMENT_ROOT']."/pictures/".$max_pic.".gif");
+$imgname = $max_pic.".gif";
+}
+//png
+elseif($filetype == "image/png" || $filetype == "image/x-png"){
+//$image = imagecreatefrompng($imagesource);
+move_uploaded_file($_FILES["file"]["tmp_name"], $_SERVER['DOCUMENT_ROOT']."/pictures/".$max_pic.".png");
+$imgname = $max_pic.".png";
+}
+//jpg
+else {
+//$image = imagecreatefromjpeg($imagesource);
+move_uploaded_file($_FILES["file"]["tmp_name"], $_SERVER['DOCUMENT_ROOT']."/pictures/".$max_pic.".jpg");
+$imgname = $max_pic.".jpg";
+}
+$imgurl = "pictures/".$imgname;
+
+
+//insert into database
+/*
+mysql_query("INSERT INTO Photos (ID, ImgURL, Imgname, Width, Height, Photosize) VALUES ('$max_pic', '$imgname', '$imgurl', '$lwidth', '$lheight')");
+*/
+
+$upquery = "INSERT INTO Photos (ImgURL, Imgname, Width, Height, Photosize) VALUES (?, ?, ?, ?, ?)";
+$upid = $conn->prepare($upquery);
+$upid->bind_param('ssiii', $imgname, $imgurl, $lwidth, $lheight, $imgsize);
+$upid->execute();
+$upid->close();
+
+//display
+echo '<br>Foto geupload';
+
+
+
+
+
+
+
+
+
+
+//$imgname = $max_pic.".jpg";
+
+/*
 //thumbnail
 if ($dir_check ==0){
 //temp
@@ -71,22 +120,10 @@ imagejpeg($image, $_SERVER['DOCUMENT_ROOT']."/thumbs/".$item.".jpg");
 
 //end thumbnail
 }
-
-echo "<P>Temp file: ". $_FILES["file"]["tmp_name"] ."</P>";
-echo "<P>Bestandstype: ". $_FILES["file"]["type"] ."</P>";
-echo "<P>Grootte: ". round(($_FILES["file"]["size"] / 1024),2) ." Kb</P>";
-
-
-//move_uploaded_file($_FILES["file"]["tmp_name"], $_SERVER['DOCUMENT_ROOT']."/pictures/".$max_pic.".jpg");
-$imgname = $max_pic.".jpg";
-
-
-
-
-
-
+*/
 
 /*START auto resize*/
+/*
 list($lwidth, $lheight, $ftype, $attr) = getimagesize($_FILES["file"]["tmp_name"]);
 $limagesource = $_FILES["file"]["tmp_name"];
 
@@ -141,6 +178,7 @@ imagejpeg ($limage, $lfilename, 100);
 else {
 move_uploaded_file($_FILES["file"]["tmp_name"], $_SERVER['DOCUMENT_ROOT']."/pictures/".$max_pic.".jpg");
 }
+*/
 /*END auto resize*/
 
 
@@ -151,10 +189,7 @@ move_uploaded_file($_FILES["file"]["tmp_name"], $_SERVER['DOCUMENT_ROOT']."/pict
 
 
 
-//insert into database
-mysql_query("INSERT INTO Pictures (ID, Monument, URL, Width, Height) VALUES ('$max_pic', '$item', '$imgname', '$newwidth', '$newheight')");
-//display
-echo '<br>Foto geupload';
+
 
 }
 
@@ -174,30 +209,11 @@ echo '<P class="error">Ongeldig bestand type.
 
 }
 
-
-
-
-
-}
-else {
-echo "<P class='error'>Item not found, or you have selected an invalid item number.</P>";
-}
-
 //end connection
 }
 
 echo '</div>';
 
-}
-else {
-echo "<P class='error'>Invalid item integer</P>";
-}
-
-
-}
-else {
-echo "<P class='error'>Invalid item</P>";
-}
 
 
 ?>
