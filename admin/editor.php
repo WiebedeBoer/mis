@@ -22,14 +22,30 @@ if ($user_cat =="superadmin" || $user_cat =="admin"){
 
 echo "<H3 class='module'>Teksteditor</H3>";
 
+
+$cocatquery = "SELECT COUNT(*) AS catcount FROM Webcontent";
+$cocatid = $conn->prepare($cocatquery);
+$cocatid->execute();
+$cocatid->bind_result($catcount);
+$cocatid->fetch();
+$cocatid->close();
+
 //paginas editor
+/*
 $resultcopag = mysql_query("SELECT COUNT(*) AS catcount FROM Webcontent");
 $rowcopag = mysql_fetch_array($resultcopag);
 $pagcheck = $rowcopag['catcount'];
-if ($pagcheck >=1){
+*/
+if ($catcount >=1){
 echo '<table class="tabel"><tr><th>Pagina</th></tr>';
+/*
 $resultpho = mysql_query("SELECT * FROM Webcontent ORDER BY Pagina");
 while ($rowpho = mysql_fetch_array($resultpho))
+  {
+*/
+$mwquery = "SELECT * FROM Webcontent ORDER BY Pagina";
+$result_wpg = $conn->query($mwquery);
+while ($rowpho = $result_wpg->fetch_assoc())
   {
 $pagina_id = $rowpho['ID'];
 $pagina_naam = $rowpho['Pagina'];

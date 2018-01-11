@@ -319,7 +319,7 @@ echo "<P class='error'>Pagina niet gevonden</P>";
 
 
 //SQL CONNECTIE SLUITEN
-mysql_close($con);
+//mysql_close($con);
 }
 
 ?>
