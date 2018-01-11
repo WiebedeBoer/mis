@@ -24,10 +24,6 @@ echo '<p class="beh"><a href="editor.php" title="Pagina Tekst Editor" class="bl"
 
 echo '<h2>Overig</h2>';
 
-echo '<p class="beh"><a href="projecten.php" title="Projecten" class="bl">Projecten</a></p>';
-
-echo '<p class="beh"><a href="deelnemers.php" title="Deelnemers" class="bl">Deelnemers</a></p>';
-
 echo '<p class="beh"><a href="banner.php" title="Banner" class="bl">Banner</a></p>';
 
 echo '<p class="beh"><a href="seo.php" title="SEO" class="bl">SEO</a></p>';
