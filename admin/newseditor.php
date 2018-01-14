@@ -54,8 +54,16 @@ $apotext = str_replace("'","[apo]",$enttext);
 $modtext = str_replace('"','[quot]',$apotext);
 
 if (filter_var($modtext, FILTER_SANITIZE_STRING)){
-
+/*
 mysql_query("UPDATE News SET Tekst ='$modtext' WHERE ID ='$editor'");
+*/
+
+$upquery = "UPDATE News SET Tekst = ? WHERE ID = ?";
+$upid = $conn->prepare($upquery);
+$upid->bind_param('si', $modtext, $editor);
+$upid->execute();
+$upid->close();
+
 echo "<P class='zent'>Bericht is aangepast</P>";
 
 }
@@ -67,10 +75,19 @@ echo "<P class='error'>Bericht kwam niet door filter</P>";
 
 
 //bericht formulier
+/*
 $result = mysql_query ("SELECT * FROM News WHERE ID ='$editor'");
 $row = mysql_fetch_array($result);
 $eventtitle = $row["Titel"];
 $evenement = $row["Tekst"];
+*/
+
+$ccquery = "SELECT Titel, Tekst FROM News WHERE ID = ?";
+$cid = $conn->prepare($ccquery);
+$cid->bind_param('i', $editor);
+$cid->execute();
+$cid->bind_result($eventtitle,$evenement);
+$cid->close();
 
 echo "<FORM method='post' action='newseditor.php?edit=".$editor."'>";
 echo '<table border="0" class="tabel">';
