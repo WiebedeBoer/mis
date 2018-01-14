@@ -193,7 +193,7 @@ $newpassword = $_POST["userpass"];
 mysql_query("INSERT INTO Users (Username, Password, Category)
 VALUES ('$newuser', '$newpassword', '$newusertype')");
 */
-$iquery = "INSERT INTO Users (Username, Password, Category) VALUES ('?, ?, ?)";
+$iquery = "INSERT INTO Users (Username, Password, Category) VALUES (?, ?, ?)";
 $iid = $conn->prepare($iquery);
 $iid->bind_param('sss', $newuser, $newpassword, $newusertype);
 $iid->execute();

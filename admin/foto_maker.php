@@ -25,7 +25,7 @@ echo "<form action='foto_loader.php' method='post' enctype='multipart/form-data'
 
 
 //SQL CONNECTIE SLUITEN
-mysql_close($con);
+//mysql_close($con);
 }
 
 ?>

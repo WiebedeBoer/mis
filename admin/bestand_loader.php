@@ -47,15 +47,22 @@ $_FILES["file"]["name"] = $qfilename;
        $tabstoragename = $_FILES["file"]["name"];
        $tabfullname = "/files/" . $_FILES["file"]["name"];
        $imgsize = $_FILES["file"]["size"];
-
+       /*
        mysql_query("INSERT INTO Bestanden (URL)
        VALUES ('$tabfullname')");
+       */
+        $iquery = "INSERT INTO Bestanden (URL) VALUES (?)";
+        $iid = $conn->prepare($iquery);
+        $iid->bind_param('s', $tabfullname);
+        $iid->execute();
+        $iid->close();
+       
        echo "<P>Grootte (in Bytes): ".$imgsize."</P>";
        echo "<P>Opgeslagen in: " . "../files/" . $_FILES["file"]["name"] ."</P>";
 
        echo "<P><b>Vervang het woord link in de onderste regel met woorden die je wilt hebben!</b></P>";
        echo "<P><b>Kopieer de volgende regel en plak deze in de editor waar je het wil hebben!</b></P>";
-       echo "<P>[url ='http://pakua.nl/files/" . $_FILES["file"]["name"] ."']link[/url]</P>";
+       echo "<P>[url ='../files/" . $_FILES["file"]["name"] ."']link[/url]</P>";
        }
      }   /*copyright wiebe eling de boer*/
 
@@ -74,7 +81,7 @@ echo "<P class='error'>Ongeldig bestand type. Bestand moet een van de volgende e
 
 
 //SQL CONNECTIE SLUITEN
-mysql_close($con);
+//mysql_close($con);
 }
 
 ?>
