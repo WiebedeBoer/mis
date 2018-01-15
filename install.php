@@ -104,7 +104,7 @@ $equery = "CREATE TABLE `Seo` (`ID` int(1) NOT NULL AUTO_INCREMENT,  PRIMARY KEY
 $eid = $conn->prepare($equery);
 $eid->execute();
 $eid->close();
-$fquery = "CREATE TABLE `Users` (`ID` int(11) NOT NULL AUTO_INCREMENT,  PRIMARY KEY(ID), `Username` varchar(40) NOT NULL, `Password` varchar(20) NOT NULL, `Category` varchar(20) NOT NULL, `Cokey` varchar(20) NOT NULL DEFAULT '0')";
+$fquery = "CREATE TABLE `Users` (`ID` int(11) NOT NULL AUTO_INCREMENT,  PRIMARY KEY(ID), `Username` varchar(80) NOT NULL, `Password` varchar(240) NOT NULL, `Category` varchar(20) NOT NULL, `Cokey` varchar(20) NOT NULL DEFAULT '0')";
 $fid = $conn->prepare($fquery);
 $fid->execute();
 $fid->close();
