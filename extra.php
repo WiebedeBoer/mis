@@ -31,10 +31,20 @@ $paginanum = $_GET["extra"];
 
 $extraurl ="extra.php?extra=".$paginanum;
 
+/*
 $resultpho = mysql_query("SELECT * FROM Webcontent WHERE PageURL ='$extraurl' AND Categorie ='extra'");
 $rowpho = mysql_fetch_array($resultpho);
 $pagnaam = $rowpho['Contentname'];
 $rawpagetext = $rowpho['Content'];
+*/
+
+$pquery = "SELECT Tekst, Pagina FROM Webcontent WHERE URL = ?";
+$pid = $conn->prepare($pquery);
+$pid->bind_param('s', $page_url);
+$pid->execute();
+$pid->bind_result($rawpagetext,$pagnaam);
+$pid->fetch();
+$pid->close();
 
 echo '<H1 class="main">'.$pagnaam.'</H1>';
 
