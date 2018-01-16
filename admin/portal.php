@@ -137,7 +137,7 @@ $Allowlogin = 11;
 else {
     //Brutecheck
     
-    $bquery = "INSERT INTO BRUTE (User) VALUES (?)";
+    $bquery = "INSERT INTO BRUTE (User) VALUES ('?')";
     $bch = $conn->prepare($bquery);
     $bch->bind_param('s', $username);
     $bch->execute();
