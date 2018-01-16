@@ -15,7 +15,7 @@ if (filter_var($_POST["username"], FILTER_SANITIZE_STRING)){
 if (filter_var($_POST["password"], FILTER_SANITIZE_STRING)){
 
 $username = $_POST["username"];
-$password = $_POST["password"];
+$password = md5($_POST["password"]);
 
 //DATABASE CONNECTION VARIABLES
 include("../includes/connect.php");
