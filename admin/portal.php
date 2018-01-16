@@ -66,7 +66,16 @@ $resultco = mysql_query ("SELECT COUNT(*) AS usercount FROM Users WHERE Username
 $rowco = mysql_fetch_assoc($resultco);
 $usercheck = $rowco["usercount"];
 */
-
+//bruteforce protection
+$brutequery = "SELECT tries FROM Brute WHERE User = ? AND DATE_ADD(block_time, INTERVAL 30 MINUTE) >= NOW()";
+$brute = $conn->prepare($brutequery);
+$brute->bind_param('s', $username);
+$brute->execute();
+$brute->bind_result($tries);
+$brute->fetch();
+$brute->close();
+// blockeer inloggen als gebruiker 5x heeft geprobeert in te loggen.
+if ($tries < 5){
 //COUNT USER
 $cquery = "SELECT COUNT(*) AS usercheck, ID, Password, Cokey FROM Users WHERE Username = ?";
 $cid = $conn->prepare($cquery);
@@ -137,17 +146,25 @@ $Allowlogin = 11;
 else {
     //Brutecheck
     
-    $bquery = "INSERT INTO BRUTE (User) VALUES ('?')";
+    $bquery = "INSERT INTO BRUTE (User, block_time) VALUES (?, NOW())";
     $bch = $conn->prepare($bquery);
     $bch->bind_param('s', $username);
     $bch->execute();
     $bch->close();
     if ($bch->affected_rows == 0){
-        $buquery = "UPDATE Brute SET tries = tries + 1 WHERE User = ?";
+        //als laatste foute login later is dan die daarvoor word de tries counter ge-reset.
+        $buquery = "UPDATE Brute SET tries=tries+1, block_time=NOW()  WHERE User = ? AND DATE_ADD(block_time, INTERVAL 30 MINUTE) >= NOW()";
         $buch = $conn->prepare($buquery);
         $buch->bind_param('s', $username);
         $buch->execute();
-        $buch->close(); 
+        $buch->close();
+        if ($nuch->affected_rows == 0){
+            $buuuery = "UPDATE Brute SET tries = 1, block_time=NOW() WHERE User = ? AND DATE_ADD(block_time, INTERVAL 30 MINUTE) < NOW()";
+            $buu = $conn->prepare($buuuery);
+            $buu->bind_param('s', $username);
+            $buu->execute();
+            $buu->close();
+        }
     }
 $Allowlogin = 10;
 }
@@ -156,7 +173,10 @@ $Allowlogin = 10;
 else {
 $Allowlogin = 9;
 }
-
+}
+else {
+$Allowlogin = 2;
+}
 /*
 }
 */
