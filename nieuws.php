@@ -7,7 +7,7 @@ if ($connected ==1){
 <HTML>
 <HEAD>';
 
-$page_url ="over_ons.php";
+$page_url ="nieuws.php";
 
 include("includes/inc_head.php");
 
