@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Gegenereerd op: 10 jan 2018 om 10:16
+-- Gegenereerd op: 17 jan 2018 om 13:21
 -- Serverversie: 5.5.56-MariaDB
 -- PHP-versie: 5.6.14
 
@@ -40,7 +40,8 @@ CREATE TABLE `Bestanden` (
 CREATE TABLE `Brute` (
   `ID` int(11) NOT NULL,
   `User` varchar(80) NOT NULL,
-  `Timer` int(11) NOT NULL
+  `time_block` datetime(6) NOT NULL,
+  `tries` int(1) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -117,13 +118,32 @@ INSERT INTO `Seo` (`ID`, `Titel`, `Beschrijving`, `Zoektermen`, `Bannier`) VALUE
 -- --------------------------------------------------------
 
 --
+-- Tabelstructuur voor tabel `Sitemap`
+--
+
+CREATE TABLE `Sitemap` (
+  `ID` int(11) NOT NULL,
+  `URL` varchar(80) NOT NULL,
+  `Freq` varchar(20) NOT NULL DEFAULT 'monthly'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Gegevens worden geëxporteerd voor tabel `Sitemap`
+--
+
+INSERT INTO `Sitemap` (`ID`, `URL`, `Freq`) VALUES
+(1, 'index.php', 'monthly');
+
+-- --------------------------------------------------------
+
+--
 -- Tabelstructuur voor tabel `Users`
 --
 
 CREATE TABLE `Users` (
   `ID` int(11) NOT NULL,
   `Username` varchar(40) NOT NULL,
-  `Password` varchar(20) NOT NULL,
+  `Password` varchar(240) NOT NULL,
   `Category` varchar(20) NOT NULL,
   `Cokey` varchar(20) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -133,10 +153,10 @@ CREATE TABLE `Users` (
 --
 
 INSERT INTO `Users` (`ID`, `Username`, `Password`, `Category`, `Cokey`) VALUES
-(1, 'Wiebe', 'eling17', 'superadmin', '5d7QkLch5O6R'),
-(2, 'Sil', 'sil18', 'superadmin', 'x9Mk9yghYQuP'),
-(3, 'Juriaan', 'juriaan19', 'superadmin', '0'),
-(4, 'Chris', 'chris20', 'superadmin', '0');
+(1, 'Wiebe', 'a8be90b1dc1e70cda81eaec61e37bcdb', 'superadmin', '5d7QkLch5O6R'),
+(2, 'Sil', '6763f4ab8a7128b2ffe89f11adec4cf3', 'superadmin', 'eapbBZ5NNBhk'),
+(3, 'Juriaan', '7fac999098589384807e2d09128771a5', 'superadmin', '0'),
+(4, 'Chris', 'c6e337507a221671688153abc7138586', 'superadmin', '0');
 
 -- --------------------------------------------------------
 
@@ -150,17 +170,20 @@ CREATE TABLE `Webcontent` (
   `URL` varchar(80) NOT NULL,
   `Tekst` text NOT NULL,
   `Verwijderbaar` int(1) NOT NULL DEFAULT '0',
-  `Zichtbaar` int(1) NOT NULL DEFAULT '1'
+  `Zichtbaar` int(1) NOT NULL DEFAULT '1',
+  `Beschrijving` varchar(200) NOT NULL DEFAULT 'geen',
+  `Zoektermen` varchar(240) NOT NULL DEFAULT 'geen'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Gegevens worden geëxporteerd voor tabel `Webcontent`
 --
 
-INSERT INTO `Webcontent` (`ID`, `Pagina`, `URL`, `Tekst`, `Verwijderbaar`, `Zichtbaar`) VALUES
-(1, 'Home', 'index.php', 'home', 0, 1),
-(2, 'Contact', 'contact.php', 'contact', 0, 1),
-(3, 'Test', 'korte_projecten.php', 'leeg ', 0, 1);
+INSERT INTO `Webcontent` (`ID`, `Pagina`, `URL`, `Tekst`, `Verwijderbaar`, `Zichtbaar`, `Beschrijving`, `Zoektermen`) VALUES
+(1, 'Home', 'index.php', 'home', 0, 1, 'geen', 'geen'),
+(2, 'Contact', 'contact.php', 'contact', 0, 1, 'geen', 'geen'),
+(3, 'Nieuws', 'nieuws.php', 'leeg ', 0, 1, 'geen', 'geen'),
+(4, 'Over Ons', 'over_ons.php', 'leeg', 0, 1, 'geen', 'geen');
 
 --
 -- Indexen voor geëxporteerde tabellen
@@ -203,6 +226,12 @@ ALTER TABLE `Seo`
   ADD PRIMARY KEY (`ID`);
 
 --
+-- Indexen voor tabel `Sitemap`
+--
+ALTER TABLE `Sitemap`
+  ADD UNIQUE KEY `unique` (`ID`);
+
+--
 -- Indexen voor tabel `Users`
 --
 ALTER TABLE `Users`
@@ -237,12 +266,17 @@ ALTER TABLE `Meldingen`
 -- AUTO_INCREMENT voor een tabel `Photos`
 --
 ALTER TABLE `Photos`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT voor een tabel `Projecten`
 --
 ALTER TABLE `Projecten`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT voor een tabel `Sitemap`
+--
+ALTER TABLE `Sitemap`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT voor een tabel `Users`
 --
@@ -252,7 +286,7 @@ ALTER TABLE `Users`
 -- AUTO_INCREMENT voor een tabel `Webcontent`
 --
 ALTER TABLE `Webcontent`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
