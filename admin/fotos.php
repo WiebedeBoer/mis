@@ -87,7 +87,7 @@ echo "<p><form action='foto_loader.php' method='post' enctype='multipart/form-da
 </form></p>";
 */
 
-echo "<p><form action='process.php' method='post' enctype='multipart/form-data'> <label for='file'>Bestand:</label>
+echo "<p><form action='foto_loader.php' method='post' enctype='multipart/form-data'> <label for='file'>Bestand:</label>
 <input type='file' name='file' id='file' />  <input type='submit' name='submit' value='upload' />
 </form></p>";
 
