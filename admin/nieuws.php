@@ -60,9 +60,17 @@ $maand = date("m");
 $jaar = date("Y");
 
 $datum = $dag."-".$maand."-".$jaar;
-
+/*
 mysql_query("INSERT INTO News (Titel, Datum, Tekst)
 VALUES ('$rawtitle', '$datum', '$modtext')");
+*/
+
+        $iquery = "INSERT INTO News (Titel, Datum, Tekst) VALUES (?, ?, ?)";
+        $iid = $conn->prepare($iquery);
+        $iid->bind_param('sss', $rawtitle, $datum, $modtext);
+        $iid->execute();
+        $iid->close();
+
 echo "<P class='zent'>Bericht gemaakt</P>";
 
 }
@@ -90,12 +98,27 @@ if (isset($_POST["deletion"])) {
 
 if (filter_var($_POST["deletion"], FILTER_VALIDATE_INT)){
 $deletor = $_POST["deletion"];
-
+/*
 $resultcocat = mysql_query("SELECT COUNT(*) AS catcount FROM News WHERE ID ='$deletor'");
 $rowcocat = mysql_fetch_array($resultcocat);
 $catcheck = $rowcocat['catcount'];
+*/
+$ccquery = "SELECT COUNT(*) AS catcheck FROM News WHERE ID = ?";
+$cid = $conn->prepare($ccquery);
+$cid->bind_param('i', $deletor);
+$cid->execute();
+$cid->bind_result($catcheck);
+$cid->close();
 if ($catcheck ==1){
+/*
 mysql_query("DELETE FROM News WHERE ID ='$deletor'");
+*/
+$dequery = "DELETE FROM News WHERE ID = ?";
+$did = $conn->prepare($dequery);
+$did->bind_param('i', $deletor);
+$did->execute();
+$did->close();
+
 echo "<P class='zent'>Nieuwsbericht is verwijderd</P>";
 }
 else {
@@ -188,14 +211,27 @@ echo "<P>Titel: <INPUT type='text' name='nieuwstitel'>
 </P></FORM>";
 
 //berichten
+/*
 $resultco = mysql_query ("SELECT COUNT(*) AS usercount FROM News");
 $rowco = mysql_fetch_assoc($resultco);
 $usercheck = $rowco["usercount"];
+*/
+
+$cocatquery = "SELECT COUNT(*) AS usercheck FROM News";
+$cocatid = $conn->prepare($cocatquery);
+$cocatid->execute();
+$cocatid->bind_result($usercheck);
+$cocatid->close();
 
 if ($usercheck >=1){
 echo "<table class='tabel'>";
+/*
 $result = mysql_query ("SELECT * FROM News ORDER BY ID DESC LIMIT 0,50");
 while ($row = mysql_fetch_assoc($result))
+*/
+$lquery = "SELECT * FROM News ORDER BY ID DESC LIMIT 0,50";
+$result_pagg = $conn->query($lquery);
+while ($rowpag = $result_pagg->fetch_assoc())
   {
 $newsnum = $row["ID"];
 $newstitle = $row["Titel"];

@@ -32,9 +32,9 @@ if(filter_var($_POST["oldpass"], FILTER_SANITIZE_STRING)){
 if(filter_var($_POST["password"], FILTER_SANITIZE_STRING)){
 if(filter_var($_POST["newpass"], FILTER_SANITIZE_STRING)){
 
-$old_pass = $_POST["oldpass"];
-$new_pass_check = $_POST["password"];
-$new_pass = $_POST["newpass"];
+$old_pass = md5($_POST["oldpass"]);
+$new_pass_check = md5($_POST["password"]);
+$new_pass = md5($_POST["newpass"]);
 
 if ($new_pass_check =="$new_pass"){
 
@@ -193,7 +193,7 @@ $newpassword = $_POST["userpass"];
 mysql_query("INSERT INTO Users (Username, Password, Category)
 VALUES ('$newuser', '$newpassword', '$newusertype')");
 */
-$iquery = "INSERT INTO Users (Username, Password, Category) VALUES ('?, ?, ?)";
+$iquery = "INSERT INTO Users (Username, Password, Category) VALUES (?, ?, ?)";
 $iid = $conn->prepare($iquery);
 $iid->bind_param('sss', $newuser, $newpassword, $newusertype);
 $iid->execute();

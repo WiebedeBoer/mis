@@ -20,14 +20,31 @@ if (isset($_POST["verwijdersoort"])){
 if (filter_var($_POST["verwijdersoort"], FILTER_VALIDATE_INT)){
 $verwijdersoort = $_POST["verwijdersoort"];
 
+/*
 $resultre = mysql_query ("SELECT * FROM Bestanden WHERE ID ='$verwijdersoort'");
 $rowre = mysql_fetch_assoc($resultre);
 $bestand_loc = $rowre["URL"];
+*/
+
+$ccquery = "SELECT URL FROM Bestanden WHERE ID = ?";
+$cid = $conn->prepare($ccquery);
+$cid->bind_param('i', $verwijdersoort);
+$cid->execute();
+$cid->bind_result($bestand_loc);
+$cid->close();
 
 $fileurl = $_SERVER["DOCUMENT_ROOT"].$bestand_loc;
 unlink($fileurl);
 
+/*
 mysql_query("DELETE FROM Bestanden WHERE ID ='$verwijdersoort'");
+*/
+
+$dequery = "DELETE FROM Bestanden WHERE ID = ?";
+$did = $conn->prepare($dequery);
+$did->bind_param('i', $verwijdersoort);
+$did->execute();
+$did->close();
 
 echo "<p>bestand verwijderd</p>";
 }
@@ -44,15 +61,28 @@ echo "<form action='bestand_loader.php' method='post' enctype='multipart/form-da
 
 
 
-
+/*
 $resultc = mysql_query ("SELECT COUNT(*) soortco FROM Bestanden");
 $rowc = mysql_fetch_assoc($resultc);
 $soort_check = $rowc["soortco"];
-if ($soort_check >=1){
+*/
+
+$ccquery = "SELECT COUNT(*) soortcheck FROM Bestanden";
+$cid = $conn->prepare($ccquery);
+$cid->execute();
+$cid->bind_result($soortcheck);
+$cid->close();
+
+if ($soortcheck >=1){
 
 echo '<table class="tabel"><th>Bestand URL</th><th>Verwijder</th>';
+/*
 $result = mysql_query ("SELECT * FROM Bestanden ORDER BY URL");
 while ($row = mysql_fetch_assoc($result))
+*/
+$lquery = "SELECT * FROM Bestanden ORDER BY URL";
+$result_pagg = $conn->query($lquery);
+while ($row = $result_pagg->fetch_assoc())
   {
 $idnummer = $row["ID"];
 $bestand_url = $row["URL"];
@@ -70,7 +100,7 @@ echo '<P class="error">nog geen bestanden geupload</P>';
 
 
 //SQL CONNECTIE SLUITEN
-mysql_close($con);
+//mysql_close($con);
 }
 
 ?>
