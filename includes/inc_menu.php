@@ -1,10 +1,11 @@
 <?php
 
-
+/*
 echo '<div class="link_menu">';
 
 echo '<div class="art-bar art-nav">
 <div class="art-nav-outer">';
+*/
 
 /*
 $result_pagf = mysql_query("SELECT * FROM Webcontent");
@@ -12,6 +13,8 @@ while ($row_pagf = mysql_fetch_assoc($result_pagf))
   {
 $page_cat_id = $row_pagf["ID"];
 */
+
+echo '<ul class="sidenav">';
 
 $mquery = "SELECT * FROM Webcontent";
 $result_pagf = $conn->query($mquery);
@@ -24,18 +27,18 @@ $page_cat_id = $row_pagf["ID"];
 
 if ($row_pagf["URL"] ==$page_url){
 
-echo '<div class="mel_sel">
-<a href="'.$row_pagf["URL"].'" title="'.$row_pagf["Pagina"].'" class="s_menu_link">
+echo '
+<li><a href="'.$row_pagf["URL"].'" title="'.$row_pagf["Pagina"].'" class="active">
 '.$row_pagf["Pagina"].'
-</a></div>';
+</a></li>';
 
 }
 else {
 
-echo '<div class="mel_un">
-<a href="'.$row_pagf["URL"].'" title="'.$row_pagf["Pagina"].'" class="menu_link">
+echo '
+<li><a href="'.$row_pagf["URL"].'" title="'.$row_pagf["Pagina"].'">
 '.$row_pagf["Pagina"].'
-</a></div>';
+</a></li>';
 
 
 }
@@ -44,12 +47,16 @@ echo '<div class="mel_un">
 
 
   }
+  
+echo '</ul>';
 
+/*
 echo '
 </div>
 </div>';
 
 echo '</div>';
+*/
 
 
 
