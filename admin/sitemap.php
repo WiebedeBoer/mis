@@ -59,6 +59,8 @@ fclose($myfile);
 }
 
 
+echo '<h2>Add to Sitemap</h2>';
+
 echo '<FORM method="post" action="sitemap.php" id="myform" name="myform">';
 echo '
 <BR>URL <INPUT type="text" name="url" maxlength="80" length="80">
@@ -70,6 +72,22 @@ echo '
 </SELECT>
 <BR><input type="submit" value="add" class="knop">
 </FORM>';
+
+
+echo '<h2>Current Sitemap</h2>';
+echo '<table>';
+echo '<tr><th>Page</th><th>Visit Frequency</th></tr>';
+$mwquery = "SELECT * FROM Sitemap ORDER BY ID";
+$result_wpg = $conn->query($mwquery);
+while ($rowwpg = $result_wpg->fetch_assoc())
+  {
+$weburl = $rowwpg['URL'];
+$webfre = $rowwpg['Freq'];
+echo '<tr><td>'.$weburl.'</td><td>'.$webfre.'</td></tr>';
+
+
+   }
+echo '</table>';
 
 
 
