@@ -67,7 +67,7 @@ $catcheck = $rowcocat['catcount'];
 if ($catcheck >=1){
 
 
-/*ONLY UPDATE*/
+/*ONLY UPDATE TEXT*/
 if (isset($_POST["messagetext"])){
 $newtext = $_POST["messagetext"];
 
@@ -97,9 +97,9 @@ if (filter_var($modtext, FILTER_SANITIZE_STRING)){
 mysql_query("UPDATE Webcontent SET Tekst ='$ugtext' WHERE ID ='$paginanum'");
 */
 
-$upquery = "UPDATE Webcontent SET Tekst ='$ugtext' WHERE ID = ?";
+$upquery = "UPDATE Webcontent SET Tekst =? WHERE ID = ?";
 $upid = $conn->prepare($upquery);
-$upid->bind_param('i', $paginanum);
+$upid->bind_param('si', $ugtext, $paginanum);
 $upid->execute();
 $upid->close();
 
@@ -115,6 +115,22 @@ echo "<P class='error'>Tekst kwam niet door filter</P>";
 }
 
 
+/*ONLY UPDATE TEXT*/
+if (isset($_POST["decription"]) && $_POST["searchterms"])){
+$new_dexription = $_POST["description"];
+$new_searchterms = $_POST["searchterms"];
+
+$upquery = "UPDATE Webcontent SET Beschrijving =?, Zoektermen =? WHERE ID = ?";
+$upid = $conn->prepare($upquery);
+$upid->bind_param('ssi', $new_dexription, $new_searchterms, $paginanum);
+$upid->execute();
+$upid->close();
+
+echo "<P>SEO geupdate</P>";
+
+}
+
+
 
 /*
 $resultpho = mysql_query("SELECT * FROM Webcontent WHERE ID ='$paginanum'");
@@ -125,11 +141,11 @@ $pagurl = $rowpho['URL'];
 */
 
 /*fetch*/
-$wquery = "SELECT Pagina, Tekst, URL FROM Webcontent WHERE ID = ?";
+$wquery = "SELECT Pagina, Tekst, URL, Beschrijving, Zoektermen FROM Webcontent WHERE ID = ?";
 $wid = $conn->prepare($wquery);
 $wid->bind_param('i', $paginanum);
 $wid->execute();
-$wid->bind_result($pagnaam, $pagtext, $pagurl);
+$wid->bind_result($pagnaam, $pagtext, $pagurl, $beschrijving, $zoektermen);
 $wid->fetch();
 $wid->close();
 
@@ -145,6 +161,17 @@ echo "<H3><A HREF='../".$pagurl."' TARGET='_blank'>".$pagnaam."</A></H3>";
 }
 
 
+echo '<h2>Page SEO Editor</h2>';
+
+echo '<FORM method="post" action="paginaeditor.php?pagina='.$paginanum.'">';
+echo '<BR><WRAP><TEXTAREA cols="78" rows="3" name="description" class="tabel">'.$beschrijving.'</TEXTAREA></WRAP>
+<BR><WRAP><TEXTAREA cols="78" rows="3" name="searchterms" class="tabel">'.$zoektermen.'</TEXTAREA></WRAP>
+<BR><input type="submit" value="update" class="knop">
+</FORM>';
+
+
+
+echo '<h2>Page Text Editor</h2>';
 
 
 $viewtext = str_replace("[apo]","'",$pagtext);
