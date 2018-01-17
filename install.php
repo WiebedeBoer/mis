@@ -124,10 +124,14 @@ $jquery = "INSERT INTO `Webcontent` (`ID`, `Pagina`, `URL`, `Tekst`, `Verwijderb
 $jid = $conn->prepare($jquery);
 $jid->execute();
 $jid->close();
-$kquery = "INSERT INTO `Webcontent` (`ID`, `Pagina`, `URL`, `Tekst`, `Verwijderbaar`, `Zichtbaar`) VALUES (3, 'Test', 'korte_projecten.php', 'leeg ', 0, 1)";
+$kquery = "INSERT INTO `Webcontent` (`ID`, `Pagina`, `URL`, `Tekst`, `Verwijderbaar`, `Zichtbaar`) VALUES (3, 'Nieuws', 'nieuws.php', 'leeg ', 0, 1)";
 $kid = $conn->prepare($kquery);
 $kid->execute();
 $kid->close();
+$pquery = "INSERT INTO `Webcontent` (`ID`, `Pagina`, `URL`, `Tekst`, `Verwijderbaar`, `Zichtbaar`) VALUES (3, 'Over Ons', 'over_ons.php', 'leeg ', 0, 1)";
+$pid = $conn->prepare($pquery);
+$pid->execute();
+$pid->close();
 
 $lquery = "INSERT INTO `Seo` (`ID`, `Domein`, `Titel`, `Beschrijving`, `Zoektermen`, `Bannier`) VALUES (0, ?, 'Test', 'leeg', 'leeg', 'leeg')";
 $lid = $conn->prepare($lquery);
