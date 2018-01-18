@@ -90,7 +90,7 @@ $bquery = "CREATE TABLE `Bestanden` (`ID` int(11) NOT NULL AUTO_INCREMENT,  PRIM
 $bid = $conn->prepare($bquery);
 $bid->execute();
 $bid->close();
-$cquery = "CREATE TABLE `Brute` (`ID` int(11) NOT NULL AUTO_INCREMENT,  PRIMARY KEY(ID), `User` varchar(80) NOT NULL, `Timer` int(11) NOT NULL)";
+$cquery = "CREATE TABLE `Brute` (`ID` int(11) NOT NULL AUTO_INCREMENT,  PRIMARY KEY(ID), `User` varchar(80) NOT NULL, `time_block` datetime(6) NOT NULL, `tries` int(1) NOT NULL)";
 $cid = $conn->prepare($cquery);
 $cid->execute();
 $cid->close();
