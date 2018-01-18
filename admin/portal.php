@@ -145,29 +145,35 @@ $Allowlogin = 11;
 }
 else {
     //Brutecheck
-    
-    $bquery = "INSERT INTO BRUTE (User, block_time) VALUES (?, NOW())";
-    $bch = $conn->prepare($bquery);
-    $bch->bind_param('s', $username);
-    $bch->execute();
-    
-    if ($bch->affected_rows == 0){
-        //als laatste foute login later is dan die daarvoor word de tries counter ge-reset.
-        $buquery = "UPDATE Brute SET tries=tries+1, block_time=NOW()  WHERE User = ? AND DATE_ADD(block_time, INTERVAL 30 MINUTE) >= NOW()";
-        $buch = $conn->prepare($buquery);
-        $buch->bind_param('s', $username);
-        $buch->execute();
-        
-        if ($buch->affected_rows == 0){
+    $cbquery = "SELECT COUNT(*) AS usernamecount FROM BRUTE WHERE User = ?";
+    $cbch = $conn->prepare($cbquery);
+    $cbch->bind_param('s', $username);
+    $cbch->bind_result($usernamecount);
+    $cbch->execute();
+    $cbch->close();
+    if($usernamecount == 1){
+        $bquery = "INSERT INTO BRUTE (User, block_time) VALUES (?, NOW())";
+        $bch = $conn->prepare($bquery);
+        $bch->bind_param('s', $username);
+        $bch->execute();
+        $bch->close();
+
+    }else {
+            //als laatste foute login later is dan die daarvoor word de tries counter ge-reset.
+            $buquery = "UPDATE Brute SET tries=tries+1, block_time=NOW()  WHERE User = ? AND DATE_ADD(block_time, INTERVAL 30 MINUTE) >= NOW()";
+            $buch = $conn->prepare($buquery);
+            $buch->bind_param('s', $username);
+            $buch->execute();
+            $buch->close();
+
             $buuuery = "UPDATE Brute SET tries = 1, block_time=NOW() WHERE User = ? AND DATE_ADD(block_time, INTERVAL 30 MINUTE) < NOW()";
             $buu = $conn->prepare($buuuery);
             $buu->bind_param('s', $username);
             $buu->execute();
             $buu->close();
         }
-        $buch->close();
-    }
-    $bch->close();
+    
+    
 $Allowlogin = 10;
 }
 
