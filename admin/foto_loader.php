@@ -51,7 +51,7 @@ if (($_FILES["file"]["type"] == "image/gif") || ($_FILES["file"]["type"] == "ima
        $tabfullname = "../pictures/" . $_FILES["file"]["name"];
        $imgsize = $_FILES["file"]["size"];
 
-       list($width, $height, $type, $attr) = getimagesize($tabstoragename);
+       list($width, $height, $type, $attr) = getimagesize($tabfullname);
        /*
        mysql_query("INSERT INTO Photos (Imgurl, Imgname, Width, Height, Photosize)
        VALUES ('$tabfullname','$tabstoragename','$width','$height', '$imgsize')");
