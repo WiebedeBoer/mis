@@ -19,8 +19,7 @@ echo '<a href="beheer.php" title="Beheer" class="bl">Terug naar Beheer</a>';
 
 
 
-
-if (($_FILES["file"]["type"] == "application/doc") || ($_FILES["file"]["type"] == "application/docx") || ($_FILES["file"]["type"] == "application/pdf") || ($_FILES["file"]["type"] == "application/rtf")){
+if (($_FILES["file"]["type"] == "application/doc") || ($_FILES["file"]["type"] == "application/docx") || ($_FILES["file"]["type"] == "application/pdf") || ($_FILES["file"]["type"] == "application/rtf") || $_FILES["file"]["type"] == "application/vnd.openxmlformats-officedocument.wordprocessingml.document"){
  if ($_FILES["file"]["size"] < 10000000){
    if ($_FILES["file"]["error"] > 0)
      {
