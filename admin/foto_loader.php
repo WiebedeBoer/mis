@@ -51,7 +51,8 @@ if (($_FILES["file"]["type"] == "image/gif") || ($_FILES["file"]["type"] == "ima
        $tabfullname = "../pictures/" . $_FILES["file"]["name"];
        $imgsize = $_FILES["file"]["size"];
 
-       list($width, $height, $type, $attr) = getimagesize($tabstoragename);
+       list($width, $height, $type, $attr) = getimagesize($tabfullname);
+       
        /*
        mysql_query("INSERT INTO Photos (Imgurl, Imgname, Width, Height, Photosize)
        VALUES ('$tabfullname','$tabstoragename','$width','$height', '$imgsize')");
@@ -62,7 +63,7 @@ if (($_FILES["file"]["type"] == "image/gif") || ($_FILES["file"]["type"] == "ima
         $upid->bind_param('ssiii', $tabfullname, $tabstoragename, $width, $height, $imgsize);
         $upid->execute();
         $upid->close();
-       
+       //vardump($width);
        echo "<P>Breedte: ".$width.", Hoogte: ".$height.", Grootte (in Bytes): ".$imgsize."</P>";
        echo "<P>Opgeslagen in: " . "../pictures/" . $qfilename ."</P>";
        echo "<P><B>Kopieer de volgende regel en plak deze in de editor waar je het wil hebben!</B></P>";
