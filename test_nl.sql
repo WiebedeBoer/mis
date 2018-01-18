@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Gegenereerd op: 18 jan 2018 om 12:56
+-- Gegenereerd op: 18 jan 2018 om 12:59
 -- Serverversie: 5.5.56-MariaDB
 -- PHP-versie: 5.6.14
 
@@ -180,7 +180,8 @@ ALTER TABLE `Bestanden`
 -- Indexen voor tabel `Brute`
 --
 ALTER TABLE `Brute`
-  ADD UNIQUE KEY `unique` (`ID`);
+  ADD UNIQUE KEY `unique` (`ID`),
+  ADD UNIQUE KEY `User` (`User`);
 
 --
 -- Indexen voor tabel `Meldingen`
