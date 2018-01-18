@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Gegenereerd op: 17 jan 2018 om 13:21
+-- Gegenereerd op: 18 jan 2018 om 12:33
 -- Serverversie: 5.5.56-MariaDB
 -- PHP-versie: 5.6.14
 
@@ -79,20 +79,6 @@ CREATE TABLE `Photos` (
 
 INSERT INTO `Photos` (`ID`, `Imgurl`, `Imgname`, `Width`, `Height`, `Photosize`) VALUES
 (1, '../pictures/met-groep-300x200.jpg', 'met-groep-300x200.jpg', 0, 0, 19090);
-
--- --------------------------------------------------------
-
---
--- Tabelstructuur voor tabel `Projecten`
---
-
-CREATE TABLE `Projecten` (
-  `ID` int(11) NOT NULL,
-  `Persoon` varchar(240) NOT NULL,
-  `Onderwerp` text NOT NULL,
-  `Email` varchar(80) NOT NULL,
-  `Kruis` varchar(40) NOT NULL DEFAULT 'ongecontroleerd'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -214,12 +200,6 @@ ALTER TABLE `Photos`
   ADD PRIMARY KEY (`ID`);
 
 --
--- Indexen voor tabel `Projecten`
---
-ALTER TABLE `Projecten`
-  ADD UNIQUE KEY `unique` (`ID`);
-
---
 -- Indexen voor tabel `Seo`
 --
 ALTER TABLE `Seo`
@@ -267,11 +247,6 @@ ALTER TABLE `Meldingen`
 --
 ALTER TABLE `Photos`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
---
--- AUTO_INCREMENT voor een tabel `Projecten`
---
-ALTER TABLE `Projecten`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT voor een tabel `Sitemap`
 --
