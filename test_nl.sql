@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Gegenereerd op: 18 jan 2018 om 12:33
+-- Gegenereerd op: 18 jan 2018 om 12:44
 -- Serverversie: 5.5.56-MariaDB
 -- PHP-versie: 5.6.14
 
@@ -91,15 +91,17 @@ CREATE TABLE `Seo` (
   `Titel` varchar(80) NOT NULL,
   `Beschrijving` varchar(200) NOT NULL,
   `Zoektermen` varchar(240) NOT NULL,
-  `Bannier` varchar(240) NOT NULL
+  `Bannier` varchar(240) NOT NULL,
+  `Domein` varchar(240) NOT NULL,
+  `Contact` varchar(80) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Gegevens worden geëxporteerd voor tabel `Seo`
 --
 
-INSERT INTO `Seo` (`ID`, `Titel`, `Beschrijving`, `Zoektermen`, `Bannier`) VALUES
-(1, 'Test', 'leeg', 'leeg', 'leeg');
+INSERT INTO `Seo` (`ID`, `Titel`, `Beschrijving`, `Zoektermen`, `Bannier`, `Domein`, `Contact`) VALUES
+(1, 'Test', 'leeg', 'leeg', 'leeg', 'recentnieuws.nl', 'info@romegames.nl');
 
 -- --------------------------------------------------------
 
