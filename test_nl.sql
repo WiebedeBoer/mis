@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Gegenereerd op: 18 jan 2018 om 12:44
+-- Gegenereerd op: 18 jan 2018 om 12:56
 -- Serverversie: 5.5.56-MariaDB
 -- PHP-versie: 5.6.14
 
@@ -40,7 +40,7 @@ CREATE TABLE `Bestanden` (
 CREATE TABLE `Brute` (
   `ID` int(11) NOT NULL,
   `User` varchar(80) NOT NULL,
-  `time_block` datetime(6) NOT NULL,
+  `block_time` datetime(6) NOT NULL,
   `tries` int(1) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -72,13 +72,6 @@ CREATE TABLE `Photos` (
   `Height` int(11) NOT NULL,
   `Photosize` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Gegevens worden geëxporteerd voor tabel `Photos`
---
-
-INSERT INTO `Photos` (`ID`, `Imgurl`, `Imgname`, `Width`, `Height`, `Photosize`) VALUES
-(1, '../pictures/met-groep-300x200.jpg', 'met-groep-300x200.jpg', 0, 0, 19090);
 
 -- --------------------------------------------------------
 
