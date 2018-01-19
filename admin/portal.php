@@ -123,7 +123,7 @@ else {
     $cbch->bind_result($usernamecount);
     $cbch->execute();
     $cbch->close();
-    if($usernamecount == 1){
+    if($usernamecount ==0){
         $bquery = "INSERT INTO BRUTE (User, block_time) VALUES (?, NOW())";
         $bch = $conn->prepare($bquery);
         $bch->bind_param('s', $username);
