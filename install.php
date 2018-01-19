@@ -41,7 +41,8 @@ echo '<p>Proceed to next step.</p>';
 echo '<form method="Post" action="install.php?step=2">
 <br>Username: <input type="text" size=20 maxlength=20 name="user">
 <br>Password: <input type="text" size=20 maxlength=20 name="pass">
-<br>Website Domain: <input type="text" size=20 maxlength=20 name="pass">
+<br>Website Domain: <input type="text" size=20 maxlength=20 name="domein">
+<br>Contact Emailaddress: <input type="text" size=20 maxlength=20 name="contact">
 <INPUT type="Submit" value="create">
 </form>';
 
@@ -56,13 +57,15 @@ echo '<form method="Post" action="install.php?step=2">
 //installatie stap 2
 elseif ($install_step ==2){
 
-if (isset($_POST["user"]) && isset($_POST["pass"]) && isset($_POST["domein"])) {
+if (isset($_POST["user"]) && isset($_POST["pass"]) && isset($_POST["domein"]) && isset($_POST["contact"])) {
 if (filter_var($_POST["user"], FILTER_SANTITIZE_STRING)){
 if (filter_var($_POST["pass"], FILTER_SANTITIZE_STRING)){
 if (filter_var($_POST["domein"], FILTER_VALIDATE_URL)){
+if (filter_var($_POST["contact"], FILTER_VALIDATE_EMAIL)){
 $username = $_POST['user'];
 $password = $_POST['pass'];
 $domein = $_POST['domein'];
+$contactadres = $_POST['contact'];
 
 include("includes/connect.php");
 
@@ -98,7 +101,7 @@ $dquery = "CREATE TABLE `Photos` (`ID` int(11) NOT NULL AUTO_INCREMENT,  PRIMARY
 $did = $conn->prepare($dquery);
 $did->execute();
 $did->close();
-$equery = "CREATE TABLE `Seo` (`ID` int(1) NOT NULL AUTO_INCREMENT,  PRIMARY KEY(ID),  `Titel` varchar(80) NOT NULL, `Beschrijving` varchar(200) NOT NULL, `Zoektermen` varchar(240) NOT NULL, `Bannier` varchar(240) NOT NULL)";
+$equery = "CREATE TABLE `Seo` (`ID` int(1) NOT NULL AUTO_INCREMENT,  PRIMARY KEY(ID),  `Titel` varchar(80) NOT NULL, `Beschrijving` varchar(200) NOT NULL, `Zoektermen` varchar(240) NOT NULL, `Bannier` varchar(240) NOT NULL, `Contact` varchar(80) NOT NULL, `Style` varchar(240) NOT NULL)";
 $eid = $conn->prepare($equery);
 $eid->execute();
 $eid->close();
@@ -133,9 +136,9 @@ $pid = $conn->prepare($pquery);
 $pid->execute();
 $pid->close();
 
-$lquery = "INSERT INTO `Seo` (`ID`, `Domein`, `Titel`, `Beschrijving`, `Zoektermen`, `Bannier`) VALUES (0, ?, 'Test', 'leeg', 'leeg', 'leeg.png')";
+$lquery = "INSERT INTO `Seo` (`ID`, `Domein`, `Titel`, `Beschrijving`, `Zoektermen`, `Bannier`, `Style`) VALUES (0, ?, 'Test', 'leeg', 'leeg', 'leeg.png', ?, 'styles')";
 $lid = $conn->prepare($lquery);
-$lid->bind_param('s', $domein);
+$lid->bind_param('ss', $domein, $conntactadres);
 $lid->execute();
 $lid->close();
 
@@ -179,6 +182,10 @@ echo '<p class="error">already installed</p>';
 
 }
 
+}
+else {
+echo '<p class="error">invalid emailaddress</p>';
+}
 }
 else {
 echo '<p class="error">invalid domain</p>';
