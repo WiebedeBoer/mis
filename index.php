@@ -14,27 +14,30 @@ include("includes/inc_head.php");
 
 echo '</HEAD>
 <BODY>
-<div class="page_full">';
+<div class="body">';
 
-echo '<div class="container_top">';
+echo '<div class="top"><div class="header">';
 include("includes/inc_banner.php");
-echo '</div>';
+echo '</div></div>';
 
-echo '<div class="container_menu">';
+echo '<div class="main">';
+
+echo '<div class="mobmenu">';
 include("includes/inc_menu.php");
 echo '</div>';
 
-echo '<div class="container_main">';
+echo '<div class="content">';
 
 include("includes/inc_home.php");
 
 echo '</div>';
+echo '</div>';
 
-echo '<div class="container_bottom">';
+echo '<div class="bottom"><div id="footer">';
 
 include("includes/inc_bottom.php");
 
-echo '</div>';
+echo '</div></div>';
 
 echo '</div>
 </BODY>

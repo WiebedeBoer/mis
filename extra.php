@@ -13,17 +13,19 @@ include("includes/inc_head.php");
 
 echo '</HEAD>
 <BODY>
-<div class="page_full">';
+<div class="body">';
 
-echo '<div class="container_top">';
+echo '<div id="top"><div id="header">';
 include("includes/inc_banner.php");
-echo '</div>';
+echo '</div></div>';
 
-echo '<div class="container_menu">';
+echo '<div id="main">';
+
+echo '<div class="mobmenu"><button class="dropbtn">Menu</button><div class="mobmenu-content">';
 include("includes/inc_menu.php");
-echo '</div>';
+echo '</div></div>';
 
-echo '<div class="container_main">';
+echo '<div class="content">';
 
 if (isset($_GET["extra"])){
 if (filter_var($_GET["extra"], FILTER_VALIDATE_INT)){
@@ -54,13 +56,14 @@ echo $riemessage;
 }
 
 echo '</div>';
+echo '</div>';
 
-echo '<div class="container_bottom">';
+echo '<div id="bottom"><div id="footer">';
 
 
 include("includes/inc_bottom.php");
 
-echo '</div>';
+echo '</div></div>';
 
 echo '</div>
 </BODY>
