@@ -30,6 +30,10 @@ echo '<p class="beh"><a href="seo.php" title="SEO" class="bl">SEO</a></p>';
 
 echo '<p class="beh"><a href="sitemap.php" title="Sitemap" class="bl">XML Sitemap</a></p>';
 
+echo '<p class="beh"><a href="styling.php" title="Styling" class="bl">CSS Styling</a></p>';
+
+echo '<p class="beh"><a href="contact.php" title="Mail" class="bl">Contact E-mail</a></p>';
+
 echo '<h2>Nieuws</h2>';
 
 echo '<p class="beh"><a href="nieuws.php" title="Nieuws" class="bl">Nieuws</a></p>';
