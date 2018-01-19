@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Gegenereerd op: 18 jan 2018 om 12:59
+-- Gegenereerd op: 19 jan 2018 om 11:52
 -- Serverversie: 5.5.56-MariaDB
 -- PHP-versie: 5.6.14
 
@@ -86,15 +86,16 @@ CREATE TABLE `Seo` (
   `Zoektermen` varchar(240) NOT NULL,
   `Bannier` varchar(240) NOT NULL,
   `Domein` varchar(240) NOT NULL,
-  `Contact` varchar(80) NOT NULL
+  `Contact` varchar(80) NOT NULL,
+  `Style` varchar(240) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Gegevens worden geëxporteerd voor tabel `Seo`
 --
 
-INSERT INTO `Seo` (`ID`, `Titel`, `Beschrijving`, `Zoektermen`, `Bannier`, `Domein`, `Contact`) VALUES
-(1, 'Test', 'leeg', 'leeg', 'leeg', 'recentnieuws.nl', 'info@romegames.nl');
+INSERT INTO `Seo` (`ID`, `Titel`, `Beschrijving`, `Zoektermen`, `Bannier`, `Domein`, `Contact`, `Style`) VALUES
+(1, 'Test', 'leeg', 'leeg', 'leeg', 'recentnieuws.nl', 'info@romegames.nl', 'styles');
 
 -- --------------------------------------------------------
 
@@ -134,7 +135,7 @@ CREATE TABLE `Users` (
 --
 
 INSERT INTO `Users` (`ID`, `Username`, `Password`, `Category`, `Cokey`) VALUES
-(1, 'Wiebe', 'a8be90b1dc1e70cda81eaec61e37bcdb', 'superadmin', '5d7QkLch5O6R'),
+(1, 'Wiebe', 'a8be90b1dc1e70cda81eaec61e37bcdb', 'superadmin', 'rEWUQA6b0IbO'),
 (2, 'Sil', '6763f4ab8a7128b2ffe89f11adec4cf3', 'superadmin', 'eapbBZ5NNBhk'),
 (3, 'Juriaan', '7fac999098589384807e2d09128771a5', 'superadmin', '0'),
 (4, 'Chris', 'c6e337507a221671688153abc7138586', 'superadmin', '0');
