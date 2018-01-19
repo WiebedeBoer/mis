@@ -133,7 +133,7 @@ $pid = $conn->prepare($pquery);
 $pid->execute();
 $pid->close();
 
-$lquery = "INSERT INTO `Seo` (`ID`, `Domein`, `Titel`, `Beschrijving`, `Zoektermen`, `Bannier`) VALUES (0, ?, 'Test', 'leeg', 'leeg', 'leeg')";
+$lquery = "INSERT INTO `Seo` (`ID`, `Domein`, `Titel`, `Beschrijving`, `Zoektermen`, `Bannier`) VALUES (0, ?, 'Test', 'leeg', 'leeg', 'leeg.png')";
 $lid = $conn->prepare($lquery);
 $lid->bind_param('s', $domein);
 $lid->execute();
