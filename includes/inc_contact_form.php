@@ -58,7 +58,7 @@ $randomchar ="charset";
 
 //CHECKING CAPTCHA
 if ($randomchar != $randomchecker){
-echo "<P class='error'>Captcha is niet juist<BR><A HREF='contact.php'>Terug</A></P>";}
+echo '<P class="error">Captcha is niet juist<br><A HREF="contact.php">Terug</A></P>';}
 else {
 
 $mail_from = $_POST["mail"];
@@ -71,14 +71,12 @@ E-mail: ".$mail_from."
 Bericht:
 ".$bericht;
 
-
         $cquery = "SELECT Contact FROM SEO WHERE ID ='1'";
         $cid = $conn->prepare($cquery);
         $cid->execute();
         $cid->bind_result($contact_adres);
         $cid->fetch();
         $cid->close();
-
 
 $p_mail =$contact_adres;
 $mail_to =$contact_adres;
@@ -92,8 +90,10 @@ echo '<P>Mail verzonden<BR><A HREF="contact.php">Terug</A></P>';
 
 }
 }
-]
+
 }
+}
+
 }
 
 }
@@ -111,10 +111,10 @@ echo '<FORM method="post" action="contact.php">
 */
 
 echo '<FORM method="post" action="contact.php">
-<label for="naam">Naam</label><input type="text" size="20" maxlength="80" id="naam" name="naam" class="veld">
-<label for="mail">E-mailadres</label><input type="text" size="20" maxlength="80" id="mail" name="mail" class="veld">
+<label for="naam">Naam</label><input type="text" size="20" maxlength="80" id="naam" name="naam" class="veld" placeholder="Naam...">
+<label for="mail">E-mailadres</label><input type="text" size="20" maxlength="80" id="mail" name="mail" class="veld" placeholder="E-mailadres...">
 <label for="ow">Uw bericht</label>
-<WRAP><TEXTAREA cols="60" rows="5" name="bericht" class="tekstveld" id="ow" style="height:200px"></TEXTAREA>';
+<WRAP><TEXTAREA cols="60" rows="5" name="bericht" class="tekstveld" id="ow" style="height:200px" placeholder="Voer hier uw bericht in..."></TEXTAREA>';
 
 $picturenum = (rand(1,9));
 switch ($picturenum){
@@ -145,8 +145,9 @@ break;
 default:
 echo '<IMG SRC="captcha/random9.gif" WIDTH=100 HEIGHT=50 class="captcha">';
 }
-echo '<label for="caaptcha">captcha</label>';
-echo '<input type="hidden" name="randpic" value="'.$picturenum.'" id="captcha">';
+echo '</br><label for="captcha">Captcha</label>';
+echo '<input type="text" name="randcheck" id="captcha" class="veld" placeholder="Captcha...">';
+echo '<input type="hidden" name="randpic" value="'.$picturenum.'" id="picturenum">';
 
 echo '<br><INPUT type="submit" value="verzenden" class="knop"></FORM>';
 
