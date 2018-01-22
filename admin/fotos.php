@@ -32,6 +32,7 @@ $cid = $conn->prepare($ccquery);
 $cid->bind_param('i', $deletor);
 $cid->execute();
 $cid->bind_result($delcheck, $phname);
+$cid->fetch();
 $cid->close();
 
 if ($delcheck ==1){
@@ -103,6 +104,7 @@ $cocatquery = "SELECT COUNT(*) AS catcheck FROM Photos";
 $cocatid = $conn->prepare($cocatquery);
 $cocatid->execute();
 $cocatid->bind_result($catcheck);
+$cocatid->fetch();
 $cocatid->close();
 
 if ($catcheck >=1){
@@ -117,6 +119,7 @@ $suquery = "SELECT SUM(Photosize) AS totalsize FROM Photos";
 $sid = $conn->prepare($suquery);
 $sid->execute();
 $sid->bind_result($totalsize);
+$sid->fetch();
 $sid->close();
 
 echo "<table border='0'><tr><td colspan='2'><B>Draaitabel</B></td></tr>
@@ -137,13 +140,24 @@ echo "<P><A HREF='fotos.php'>Sorteer op Alfabetische Volgorde</A> | <B><A HREF='
 echo "<table border='0'>
 <tr><td>URL</td><td>Naam</td><td>Breedte (in pixels)</td><td>Hoogte (in pixels)</td><td>Grootte (in Bytes)</td><td>Verwijderknop</td></tr>";
 
+
+
+$cdquery = "SELECT Domein FROM SEO WHERE ID ='1'";
+$cdid = $conn->prepare($cdquery);
+$cdid->execute();
+$cdid->bind_result($domein);
+$cdid->fetch();
+$cdid->close();
+
+$newdomein = $domein."/";
+
 /*
 $resultpho = mysql_query("SELECT * FROM Photos ORDER BY PhotoID DESC");
 while ($rowpho = mysql_fetch_array($resultpho))
 */
-$lquery = "SELECT * FROM Photos ORDER BY PhotoID DESC";
+$lquery = "SELECT * FROM Photos ORDER BY ID DESC";
 $result_pagg = $conn->query($lquery);
-while ($rowpag = $result_pagg->fetch_assoc())
+while ($rowpho = $result_pagg->fetch_assoc())
   {
 $photoid = $rowpho['ID'];
 $photourl = $rowpho['Imgurl'];
@@ -152,7 +166,7 @@ $showname = str_replace("[quot]","'",$photoname);
 $photowidth = $rowpho['Width'];
 $photoheight = $rowpho['Height'];
 $photosize = $rowpho['Photosize'];
-$modurl = str_replace("../","http://sociaalgoud.nl/",$photourl);
+$modurl = str_replace("../",$newdomein,$photourl);
 $rerurl = str_replace(" ","%20",$modurl);
 $reurl = str_replace("[quot]","'",$rerurl);
 
@@ -177,7 +191,7 @@ while ($rowpho = mysql_fetch_array($resultpho))
 */
 $lquery = "SELECT * FROM Photos ORDER BY Imgname";
 $result_pagg = $conn->query($lquery);
-while ($rowpag = $result_pagg->fetch_assoc())
+while ($rowpho = $result_pagg->fetch_assoc())
   {
 $photoid = $rowpho['ID'];
 $photourl = $rowpho['Imgurl'];
@@ -186,10 +200,10 @@ $showname = str_replace("[quot]","'",$photoname);
 $photowidth = $rowpho['Width'];
 $photoheight = $rowpho['Height'];
 $photosize = $rowpho['Photosize'];
-//$modurl = str_replace("../","http://sociaalgoud.nl/",$photourl);
-//$rerurl = str_replace(" ","%20",$modurl);
-//$reurl = str_replace("[quot]","'",$rerurl);
-$reurl = "../".$photourl;
+$modurl = str_replace("../",$newdomein,$photourl);
+$rerurl = str_replace(" ","%20",$modurl);
+$reurl = str_replace("[quot]","'",$rerurl);
+//$reurl = "../".$photourl;
 echo "<tr><td class='nowr'>".$reurl."</td><td class='nowr'><A HREF='../pictures/".$showname."' target='_blank' class='notext'>".$showname."</A></td><td class='nowr'>".$photowidth."</td><td class='nowr'>".$photoheight."</td><td class='nowr'>".$photosize."</td><td><FORM method='POST' action='fotos.php'><INPUT type='hidden' value='".$photoid."' name='deletion'><INPUT type='submit' value='verwijder'></FORM></td></tr>";
   }
 
