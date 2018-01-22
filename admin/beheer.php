@@ -85,9 +85,6 @@ echo '<p class="beh"><a href="logout.php" title="Logout" class="bl">Logout</a></
 }
 
 
-echo '<h2>Help</h2>';
-
-echo '<p class="beh"><a href="https://www.youtube.com/watch?v=FsaKtVIG2cg" target="_blank" title="help" class="bl">Tutorial Video</a></p>';
 
 }
 else {
