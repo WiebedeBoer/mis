@@ -69,6 +69,7 @@ VALUES ('$rawtitle', '$datum', '$modtext')");
         $iid = $conn->prepare($iquery);
         $iid->bind_param('sss', $rawtitle, $datum, $modtext);
         $iid->execute();
+        $iid->fetch();
         $iid->close();
 
 echo "<P class='zent'>Bericht gemaakt</P>";
@@ -108,6 +109,7 @@ $cid = $conn->prepare($ccquery);
 $cid->bind_param('i', $deletor);
 $cid->execute();
 $cid->bind_result($catcheck);
+$cid->fetch();
 $cid->close();
 if ($catcheck ==1){
 /*
@@ -117,6 +119,7 @@ $dequery = "DELETE FROM News WHERE ID = ?";
 $did = $conn->prepare($dequery);
 $did->bind_param('i', $deletor);
 $did->execute();
+$did->fetch();
 $did->close();
 
 echo "<P class='zent'>Nieuwsbericht is verwijderd</P>";
@@ -221,6 +224,7 @@ $cocatquery = "SELECT COUNT(*) AS usercheck FROM News";
 $cocatid = $conn->prepare($cocatquery);
 $cocatid->execute();
 $cocatid->bind_result($usercheck);
+$cocatid->fetch();
 $cocatid->close();
 
 if ($usercheck >=1){
@@ -231,7 +235,7 @@ while ($row = mysql_fetch_assoc($result))
 */
 $lquery = "SELECT * FROM News ORDER BY ID DESC LIMIT 0,50";
 $result_pagg = $conn->query($lquery);
-while ($rowpag = $result_pagg->fetch_assoc())
+while ($row = $result_pagg->fetch_assoc())
   {
 $newsnum = $row["ID"];
 $newstitle = $row["Titel"];
