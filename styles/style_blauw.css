@@ -166,6 +166,7 @@ div.content {
 }
 
 @media screen and (max-width: 500px) {
+
 #header{
         display:none;
 }
@@ -225,6 +226,11 @@ div.content {
         width:100%;
 
 }
+
+
+.hide {display:none;}
+
+.show {display:block;}
 
    ul.sidenav li a {
         text-align: center;
