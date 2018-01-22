@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Gegenereerd op: 19 jan 2018 om 11:52
+-- Gegenereerd op: 22 jan 2018 om 11:35
 -- Serverversie: 5.5.56-MariaDB
 -- PHP-versie: 5.6.14
 
@@ -61,6 +61,19 @@ CREATE TABLE `Meldingen` (
 -- --------------------------------------------------------
 
 --
+-- Tabelstructuur voor tabel `News`
+--
+
+CREATE TABLE `News` (
+  `ID` int(11) NOT NULL,
+  `Titel` varchar(240) NOT NULL,
+  `Datum` varchar(240) NOT NULL,
+  `Tekst` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
 -- Tabelstructuur voor tabel `Photos`
 --
 
@@ -72,6 +85,13 @@ CREATE TABLE `Photos` (
   `Height` int(11) NOT NULL,
   `Photosize` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Gegevens worden geëxporteerd voor tabel `Photos`
+--
+
+INSERT INTO `Photos` (`ID`, `Imgurl`, `Imgname`, `Width`, `Height`, `Photosize`) VALUES
+(2, '../pictures/2017-12-10 (3).png', '2017-12-10 (3).png', 1924, 1080, 2396922);
 
 -- --------------------------------------------------------
 
@@ -135,9 +155,9 @@ CREATE TABLE `Users` (
 --
 
 INSERT INTO `Users` (`ID`, `Username`, `Password`, `Category`, `Cokey`) VALUES
-(1, 'Wiebe', 'a8be90b1dc1e70cda81eaec61e37bcdb', 'superadmin', 'rEWUQA6b0IbO'),
+(1, 'Wiebe', 'a8be90b1dc1e70cda81eaec61e37bcdb', 'superadmin', '8FiOFVgjTyYQ'),
 (2, 'Sil', '6763f4ab8a7128b2ffe89f11adec4cf3', 'superadmin', 'eapbBZ5NNBhk'),
-(3, 'Juriaan', '7fac999098589384807e2d09128771a5', 'superadmin', '0'),
+(3, 'Juriaan', '7fac999098589384807e2d09128771a5', 'superadmin', 'LyivEhHAvHeS'),
 (4, 'Chris', 'c6e337507a221671688153abc7138586', 'superadmin', '0');
 
 -- --------------------------------------------------------
@@ -191,6 +211,12 @@ ALTER TABLE `Meldingen`
   ADD UNIQUE KEY `unique` (`ID`);
 
 --
+-- Indexen voor tabel `News`
+--
+ALTER TABLE `News`
+  ADD UNIQUE KEY `unique` (`ID`);
+
+--
 -- Indexen voor tabel `Photos`
 --
 ALTER TABLE `Photos`
@@ -240,10 +266,15 @@ ALTER TABLE `Brute`
 ALTER TABLE `Meldingen`
   MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
 --
+-- AUTO_INCREMENT voor een tabel `News`
+--
+ALTER TABLE `News`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+--
 -- AUTO_INCREMENT voor een tabel `Photos`
 --
 ALTER TABLE `Photos`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT voor een tabel `Sitemap`
 --

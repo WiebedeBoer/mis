@@ -97,6 +97,10 @@ $cquery = "CREATE TABLE `Brute` (`ID` int(11) NOT NULL AUTO_INCREMENT,  PRIMARY 
 $cid = $conn->prepare($cquery);
 $cid->execute();
 $cid->close();
+$rquery = "CREATE TABLE `News` (`ID` int(11) NOT NULL AUTO_INCREMENT,  PRIMARY KEY(ID), `Titel` varchar(240) NOT NULL, `Datum` varchar(240) NOT NULL, `Tekst` text NOT NULL)";
+$rid = $conn->prepare($rquery);
+$rid->execute();
+$rid->close();
 $dquery = "CREATE TABLE `Photos` (`ID` int(11) NOT NULL AUTO_INCREMENT,  PRIMARY KEY(ID), `Imgurl` varchar(240) NOT NULL, `Imgname` varchar(240) NOT NULL, `Width` int(11) NOT NULL, `Height` int(11) NOT NULL, `Photosize` int(11) NOT NULL)";
 $did = $conn->prepare($dquery);
 $did->execute();

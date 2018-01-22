@@ -29,7 +29,7 @@ echo '<div class="content">';
 
 include("includes/inc_page.php");
 
-
+include("includes/inc_news.php");
 
 echo '</div>';
 
