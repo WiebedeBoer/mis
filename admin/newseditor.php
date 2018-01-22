@@ -38,10 +38,19 @@ echo '<h2>Nieuws Editor</h2>';
 if (isset($_GET["edit"])) {
 if (filter_var($_GET["edit"], FILTER_VALIDATE_INT)){
 $editor = $_GET["edit"];
-
+/*
 $resultcocat = mysql_query("SELECT COUNT(*) AS catcount FROM News WHERE ID ='$editor'");
 $rowcocat = mysql_fetch_array($resultcocat);
 $catcheck = $rowcocat['catcount'];
+*/
+
+$cocatquery = "SELECT COUNT(*) AS catcheck FROM News WHERE ID = ?";
+$cocatid = $conn->prepare($cocatquery);
+$cocatid->bind_param('i', $editor);
+$cocatid->execute();
+$cocatid->bind_result($catcheck);
+$cocatid->close();
+
 if ($catcheck ==1){
 
 

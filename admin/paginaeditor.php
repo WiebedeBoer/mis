@@ -103,20 +103,18 @@ $upid->bind_param('si', $ugtext, $paginanum);
 $upid->execute();
 $upid->close();
 
-
 echo "<P>Tekst geupdate</P>";
 
 }
 else {
-
 echo "<P class='error'>Tekst kwam niet door filter</P>";
 }
 
 }
 
 
-/*ONLY UPDATE TEXT*/
-if (isset($_POST["decription"]) && $_POST["searchterms"])){
+
+if (isset($_POST["decription"]) && isset($_POST["searchterms"]) ){
 $new_dexription = $_POST["description"];
 $new_searchterms = $_POST["searchterms"];
 
@@ -129,6 +127,8 @@ $upid->close();
 echo "<P>SEO geupdate</P>";
 
 }
+
+
 
 
 
@@ -345,8 +345,6 @@ echo "<P class='error'>Pagina niet gevonden</P>";
 
 
 
-//SQL CONNECTIE SLUITEN
-//mysql_close($con);
 }
 
 ?>

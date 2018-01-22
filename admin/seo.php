@@ -6,6 +6,7 @@ include("head.php");
 ?>
 </HEAD>
 <BODY>
+<P style="color:#0000ff"><A HREF="beheer.php" class="bl">Terug</A> naar beheer</P>
 <?php
 
 include("connect.php");
@@ -82,7 +83,7 @@ $describe_text = $rowpho['Beschrijving'];
 $searchterms_text = $rowpho['Zoektermen'];
 */
 
-$wquery = "SELECT Titel, Beschrijving, Zoektermen FROM Webcontent WHERE ID = '1'";
+$wquery = "SELECT Titel, Beschrijving, Zoektermen FROM Seo WHERE ID = '1'";
 $wid = $conn->prepare($wquery);
 $wid->execute();
 $wid->bind_result($titel, $describe_text, $searchterms_text);
