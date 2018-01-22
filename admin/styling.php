@@ -26,8 +26,33 @@ $cid->bind_result($stylesheet);
 $cid->fetch();
 $cid->close();
 
+
+
+if ($stylesheet == "") {
+    echo '<p style="color:red">GEEN STYLESHEET IS GEDEFINEERD, VERANDER DIT SNEL</p>';
+    echo '<br/>';
+}
+$files = glob('../styles/*.css');
+$files = str_replace('../styles/','', $files);
+echo '<form>';
+echo '<select>';
+    echo '<option selected>'.$stylesheet.'</option>';
+    foreach($files as $value){
+        if ($stylesheet != $value){
+            echo'<option>'.$value.'</option>';
+        }
+    }
+echo '</select>';
+
+echo '<br/>';
+echo '<button>save</button>';
+
+}else {
+    echo 'jij mag hier niet zijn. wegwezen';
 }
 
+}else {
+    echo 'Dikke error. zoek contact met uw syteem beheerder.';
 }
 
 ?>
