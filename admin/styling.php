@@ -36,10 +36,10 @@ $files = glob('../styles/*.css');
 $files = str_replace('../styles/','', $files);
 echo '<form>';
 echo '<select>';
-    echo '<option selected>'.$stylesheet.'</option>';
+    echo '<option value="'.$stylesheet.'" selected>'.$stylesheet.'</option>';
     foreach($files as $value){
         if ($stylesheet != $value){
-            echo'<option>'.$value.'</option>';
+            echo'<option value="'.$value.'">'.$value.'</option>';
         }
     }
 echo '</select>';
