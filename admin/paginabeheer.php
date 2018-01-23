@@ -79,7 +79,7 @@ echo "<P class='error'>Ongeldige integer</P>";
 if (isset($_POST["makepage"])) {
 
 if (!filter_var($_POST["makepage"], FILTER_SANITIZE_STRING)){
-echo "<P class='error'>Naam (NL) kwam niet door filter</P>";}
+echo "<P class='error'>Naam kwam niet door filter</P>";}
 else {
 
 $pagename = $_POST["makepage"];
@@ -93,10 +93,10 @@ mysql_query("INSERT INTO Webcontent (Pagina, Tekst, Verwijderbaar, URL)
 VALUES ('$pagename', 'nog geen tekst', '1', '$extraurl')");
 */
 
-$iquery = "INSERT INTO Webcontent (Pagina, Tekst, Verwijderbaar, URL)
-VALUES (?, 'nog geen tekst', '1', ?)";
+$iquery = "INSERT INTO Webcontent (Pagina, URL, Tekst, Verwijderbaar)
+VALUES (?, ?, 'nog geen tekst', '1')";
 $ires = $conn->prepare($iquery);
-$did->bind_param('ss', $pagename, $extraurl);
+$ires->bind_param('ss', $pagename, $extraurl);
 $ires->execute();
 $ires->close();
 
