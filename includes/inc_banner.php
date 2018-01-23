@@ -7,15 +7,15 @@ $bannier_text = $row_bannier['Bannier'];
 */
 
 //select
-$bquery = "SELECT Bannier FROM Seo WHERE ID = ?";
+$bquery = "SELECT Bannier, Width, Height FROM Seo WHERE ID = ?";
 $bid = $conn->prepare($bquery);
 $bid->bind_param('i', $search_id);
 $bid->execute();
-$bid->bind_result($bannier_text);
+$bid->bind_result($bannier_text, $bannier_width, $bannier_height);
 $bid->fetch();
 $bid->close();
 
-echo '<img src="pictures/'.$bannier_text.'" class="bannerimage" alt="banner" width="1500" height="409">';
+echo '<img src="pictures/'.$bannier_text.'" class="bannerimage" alt="banner" width="'.$bannier_width.'" height="'.$bannier_height.'">';
 ?>
 
 
