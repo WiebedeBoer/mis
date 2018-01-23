@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Gegenereerd op: 22 jan 2018 om 11:35
+-- Gegenereerd op: 23 jan 2018 om 11:39
 -- Serverversie: 5.5.56-MariaDB
 -- PHP-versie: 5.6.14
 
@@ -71,6 +71,15 @@ CREATE TABLE `News` (
   `Tekst` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Gegevens worden geëxporteerd voor tabel `News`
+--
+
+INSERT INTO `News` (`ID`, `Titel`, `Datum`, `Tekst`) VALUES
+(6, 'Test bericht', '22-01-2018', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eu laoreet orci. Fusce at ligula vel erat faucibus cursus. Suspendisse potenti. Pellentesque rhoncus ac justo in cursus. Mauris vestibulum egestas purus, nec cursus leo mollis in. Pellentesque condimentum ante ut justo vehicula, non varius massa aliquam. Proin porta maximus pulvinar. In id facilisis sem, euismod varius lectus. Fusce aliquet leo eu tellus tincidunt convallis. Duis arcu eros, maximus sit amet lobortis eu, semper sed justo. Cras semper mi vel mauris varius, in ornare arcu porta. Donec non velit a sapien malesuada elementum quis eu felis. Aliquam erat volutpat. Aliquam luctus quis augue eget vehicula. Ut nunc massa, finibus at sagittis in, condimentum quis justo. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. '),
+(7, 'bericht 2', '22-01-2018', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eu laoreet orci. Fusce at ligula vel erat faucibus cursus. Suspendisse potenti. Pellentesque rhoncus ac justo in cursus. Mauris vestibulum egestas purus, nec cursus leo mollis in. Pellentesque condimentum ante ut justo vehicula, non varius massa aliquam. Proin porta maximus pulvinar. In id facilisis sem, euismod varius lectus. Fusce aliquet leo eu tellus tincidunt convallis. Duis arcu eros, maximus sit amet lobortis eu, semper sed justo. Cras semper mi vel mauris varius, in ornare arcu porta. Donec non velit a sapien malesuada elementum quis eu felis. Aliquam erat volutpat. Aliquam luctus quis augue eget vehicula. Ut nunc massa, finibus at sagittis in, condimentum quis justo. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. '),
+(8, 'bericht 3', '22-01-2018', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eu laoreet orci. Fusce at ligula vel erat faucibus cursus. Suspendisse potenti. Pellentesque rhoncus ac justo in cursus. Mauris vestibulum egestas purus, nec cursus leo mollis in. Pellentesque condimentum ante ut justo vehicula, non varius massa aliquam. Proin porta maximus pulvinar. In id facilisis sem, euismod varius lectus. Fusce aliquet leo eu tellus tincidunt convallis. Duis arcu eros, maximus sit amet lobortis eu, semper sed justo. Cras semper mi vel mauris varius, in ornare arcu porta. Donec non velit a sapien malesuada elementum quis eu felis. Aliquam erat volutpat. Aliquam luctus quis augue eget vehicula. Ut nunc massa, finibus at sagittis in, condimentum quis justo. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. ');
+
 -- --------------------------------------------------------
 
 --
@@ -91,7 +100,10 @@ CREATE TABLE `Photos` (
 --
 
 INSERT INTO `Photos` (`ID`, `Imgurl`, `Imgname`, `Width`, `Height`, `Photosize`) VALUES
-(2, '../pictures/2017-12-10 (3).png', '2017-12-10 (3).png', 1924, 1080, 2396922);
+(4, '../pictures/fryslan.jpg', 'fryslan.jpg', 448, 173, 18858),
+(5, '../pictures/source.gif', 'source.gif', 570, 363, 664470),
+(6, '../pictures/dancing-banana.gif', 'dancing-banana.gif', 365, 360, 71759),
+(7, '../pictures/it.gif', 'it.gif', 243, 339, 805318);
 
 -- --------------------------------------------------------
 
@@ -107,15 +119,17 @@ CREATE TABLE `Seo` (
   `Bannier` varchar(240) NOT NULL,
   `Domein` varchar(240) NOT NULL,
   `Contact` varchar(80) NOT NULL,
-  `Style` varchar(240) NOT NULL
+  `Style` varchar(240) NOT NULL,
+  `Width` int(4) NOT NULL DEFAULT '1',
+  `Height` int(4) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Gegevens worden geëxporteerd voor tabel `Seo`
 --
 
-INSERT INTO `Seo` (`ID`, `Titel`, `Beschrijving`, `Zoektermen`, `Bannier`, `Domein`, `Contact`, `Style`) VALUES
-(1, 'Test', 'leeg', 'leeg', 'leeg', 'recentnieuws.nl', 'info@romegames.nl', 'styles');
+INSERT INTO `Seo` (`ID`, `Titel`, `Beschrijving`, `Zoektermen`, `Bannier`, `Domein`, `Contact`, `Style`, `Width`, `Height`) VALUES
+(1, 'Test', 'leeg', 'leeg', 'dancing-banana.gif', 'recentnieuws.nl', 'info@romegames.nl', 'styles', 150, 150);
 
 -- --------------------------------------------------------
 
@@ -155,10 +169,10 @@ CREATE TABLE `Users` (
 --
 
 INSERT INTO `Users` (`ID`, `Username`, `Password`, `Category`, `Cokey`) VALUES
-(1, 'Wiebe', 'a8be90b1dc1e70cda81eaec61e37bcdb', 'superadmin', '8FiOFVgjTyYQ'),
+(1, 'Wiebe', 'a8be90b1dc1e70cda81eaec61e37bcdb', 'superadmin', 'R2yuFCfLQNyB'),
 (2, 'Sil', '6763f4ab8a7128b2ffe89f11adec4cf3', 'superadmin', 'eapbBZ5NNBhk'),
-(3, 'Juriaan', '7fac999098589384807e2d09128771a5', 'superadmin', 'LyivEhHAvHeS'),
-(4, 'Chris', 'c6e337507a221671688153abc7138586', 'superadmin', '0');
+(3, 'Juriaan', '7fac999098589384807e2d09128771a5', 'superadmin', 'X0gGC5ARYDgM'),
+(4, 'Chris', 'c6e337507a221671688153abc7138586', 'superadmin', 'Qdeiy5hygAQ6');
 
 -- --------------------------------------------------------
 
@@ -182,7 +196,7 @@ CREATE TABLE `Webcontent` (
 --
 
 INSERT INTO `Webcontent` (`ID`, `Pagina`, `URL`, `Tekst`, `Verwijderbaar`, `Zichtbaar`, `Beschrijving`, `Zoektermen`) VALUES
-(1, 'Home', 'index.php', 'home', 0, 1, 'geen', 'geen'),
+(1, 'Home', 'index.php', 'home test', 0, 1, 'geen', 'geen'),
 (2, 'Contact', 'contact.php', 'contact', 0, 1, 'geen', 'geen'),
 (3, 'Nieuws', 'nieuws.php', 'leeg ', 0, 1, 'geen', 'geen'),
 (4, 'Over Ons', 'over_ons.php', 'leeg', 0, 1, 'geen', 'geen');
@@ -269,12 +283,12 @@ ALTER TABLE `Meldingen`
 -- AUTO_INCREMENT voor een tabel `News`
 --
 ALTER TABLE `News`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 --
 -- AUTO_INCREMENT voor een tabel `Photos`
 --
 ALTER TABLE `Photos`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT voor een tabel `Sitemap`
 --

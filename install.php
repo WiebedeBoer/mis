@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <HTML>
 <HEAD>
-<title>error</title>
+<title>install</title>
 </HEAD>
 <BODY>
 <?php
@@ -10,9 +10,13 @@
 
 
 if (isset($_GET["step"])) {
+
+
 $install_step = $_GET["step"];
 //installatie stap 1
 if ($install_step ==1){
+
+
 
 if (isset($_POST["server"]) && isset($_POST["dbname"]) && isset($_POST["user"]) && isset($_POST["pass"])) {
 if (filter_var($_POST["server"], FILTER_SANTITIZE_STRING)){
@@ -51,11 +55,16 @@ echo '<form method="Post" action="install.php?step=2">
 }
 }
 }
+
 }
+
+
 
 }
 //installatie stap 2
 elseif ($install_step ==2){
+
+
 
 if (isset($_POST["user"]) && isset($_POST["pass"]) && isset($_POST["domein"]) && isset($_POST["contact"])) {
 if (filter_var($_POST["user"], FILTER_SANTITIZE_STRING)){
@@ -69,7 +78,7 @@ $contactadres = $_POST['contact'];
 
 include("includes/connect.php");
 
-/*SQL CONNECTION*/
+//SQL CONNECTION
 $conn = new mysqli($myserver, $myname, $mypassword, $mydb);
 if ($conn->connect_error)
   {
@@ -88,6 +97,8 @@ $cid->close();
 
 if ($usercheck <1){
 
+/*
+
 //tabellen installeren
 $bquery = "CREATE TABLE `Bestanden` (`ID` int(11) NOT NULL AUTO_INCREMENT,  PRIMARY KEY(ID), `URL` varchar(240) NOT NULL)";
 $bid = $conn->prepare($bquery);
@@ -105,7 +116,7 @@ $dquery = "CREATE TABLE `Photos` (`ID` int(11) NOT NULL AUTO_INCREMENT,  PRIMARY
 $did = $conn->prepare($dquery);
 $did->execute();
 $did->close();
-$equery = "CREATE TABLE `Seo` (`ID` int(1) NOT NULL AUTO_INCREMENT,  PRIMARY KEY(ID),  `Titel` varchar(80) NOT NULL, `Beschrijving` varchar(200) NOT NULL, `Zoektermen` varchar(240) NOT NULL, `Bannier` varchar(240) NOT NULL, `Contact` varchar(80) NOT NULL, `Style` varchar(240) NOT NULL)";
+$equery = "CREATE TABLE `Seo` (`ID` int(1) NOT NULL AUTO_INCREMENT,  PRIMARY KEY(ID),  `Titel` varchar(80) NOT NULL, `Beschrijving` varchar(200) NOT NULL, `Zoektermen` varchar(240) NOT NULL, `Bannier` varchar(240) NOT NULL, `Contact` varchar(80) NOT NULL, `Style` varchar(240) NOT NULL, `Width` varchar(240) NOT NULL DEFAULT '1', `Height` varchar(240) NOT NULL DEFAULT '1')";
 $eid = $conn->prepare($equery);
 $eid->execute();
 $eid->close();
@@ -179,6 +190,8 @@ fclose($myfile);
 
 echo '<p>data installed. Proceed to <a href="uninstall.php">final step</a>.</p>';
 
+*/
+
 }
 else {
 echo '<p class="error">already installed</p>';
@@ -205,17 +218,20 @@ echo '<p class="error">invalid username</p>';
 
 }
 
+
+
 }
 //insstallatie stap 3
 elseif ($install_step ==3){
 
-/*eventuele derde stap*/
+//eventuele derde stap
 
 }
 //error
 else {
 echo '<p class="error">install error</p>';
 }
+
 }
 //installatie stap  0
 else {
