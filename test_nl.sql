@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Gegenereerd op: 23 jan 2018 om 11:39
+-- Gegenereerd op: 23 jan 2018 om 12:06
 -- Serverversie: 5.5.56-MariaDB
 -- PHP-versie: 5.6.14
 
@@ -187,6 +187,7 @@ CREATE TABLE `Webcontent` (
   `Tekst` text NOT NULL,
   `Verwijderbaar` int(1) NOT NULL DEFAULT '0',
   `Zichtbaar` int(1) NOT NULL DEFAULT '1',
+  `Volgorde` int(4) NOT NULL DEFAULT '1',
   `Beschrijving` varchar(200) NOT NULL DEFAULT 'geen',
   `Zoektermen` varchar(240) NOT NULL DEFAULT 'geen'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -195,11 +196,12 @@ CREATE TABLE `Webcontent` (
 -- Gegevens worden geëxporteerd voor tabel `Webcontent`
 --
 
-INSERT INTO `Webcontent` (`ID`, `Pagina`, `URL`, `Tekst`, `Verwijderbaar`, `Zichtbaar`, `Beschrijving`, `Zoektermen`) VALUES
-(1, 'Home', 'index.php', 'home test', 0, 1, 'geen', 'geen'),
-(2, 'Contact', 'contact.php', 'contact', 0, 1, 'geen', 'geen'),
-(3, 'Nieuws', 'nieuws.php', 'leeg ', 0, 1, 'geen', 'geen'),
-(4, 'Over Ons', 'over_ons.php', 'leeg', 0, 1, 'geen', 'geen');
+INSERT INTO `Webcontent` (`ID`, `Pagina`, `URL`, `Tekst`, `Verwijderbaar`, `Zichtbaar`, `Volgorde`, `Beschrijving`, `Zoektermen`) VALUES
+(1, 'Home', 'index.php', 'home test', 0, 1, 1, 'geen', 'geen'),
+(2, 'Contact', 'contact.php', 'contact', 0, 1, 2, 'geen', 'geen'),
+(3, 'Nieuws', 'nieuws.php', 'leeg ', 0, 1, 1, 'geen', 'geen'),
+(4, 'Over Ons', 'over_ons.php', 'leeg', 0, 1, 1, 'geen', 'geen'),
+(5, 'extra', 'extra.php?extra=', 'nog geen tekst', 0, 1, 3, 'geen', 'geen');
 
 --
 -- Indexen voor geëxporteerde tabellen
@@ -303,7 +305,7 @@ ALTER TABLE `Users`
 -- AUTO_INCREMENT voor een tabel `Webcontent`
 --
 ALTER TABLE `Webcontent`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
