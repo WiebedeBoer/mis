@@ -92,11 +92,11 @@ $wid->close();
 
 echo '<FORM method="post" action="seo.php" id="myform" name="myform">';
 echo '
-<BR>titel<br><WRAP><TEXTAREA cols="78" rows="20" name="titel" class="tabel">'.$titel.'</TEXTAREA></WRAP>
-<BR><br><WRAP><TEXTAREA cols="78" rows="20" name="describe" class="tabel">'.$describe_text.'</TEXTAREA></WRAP>
-<BR><br><WRAP><TEXTAREA cols="78" rows="20" name="searchterms" class="tabel">'.$searchterms_text.'</TEXTAREA></WRAP>
+<BR>titel<BR><WRAP><TEXTAREA cols="78" rows="20" name="titel" class="tabel">'.$titel.'</TEXTAREA></WRAP>
+<BR>beschrijving<BR><WRAP><TEXTAREA cols="78" rows="20" name="describe" class="tabel">'.$describe_text.'</TEXTAREA></WRAP>
+<BR>zoektermen<BR><WRAP><TEXTAREA cols="78" rows="20" name="searchterms" class="tabel">'.$searchterms_text.'</TEXTAREA></WRAP>
 <BR><input type="submit" value="update" class="knop">
-</FORM><br><br>';
+</FORM>';
 
 
 
