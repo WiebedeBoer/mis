@@ -20,7 +20,7 @@ $cid->fetch();
 $cid->close();
 //close connection
 //$conn->close();
-
+//var_dump($stylesheet);
 //display head
 echo '<title>'.$describe_title.'</title>
 <META NAME="description" CONTENT="'.$describe_text.'"/>
@@ -29,7 +29,7 @@ echo '<title>'.$describe_title.'</title>
 <META NAME="ROBOTS" CONTENT="INDEX, FOLLOW">
 <meta http-equive="content-type" content="text/html; charset=ISO-8859-1">
 <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
-<link rel="stylesheet" type="text/css" href="styles/'.$stylesheet.'.css">
+<link rel="stylesheet" type="text/css" href="styles/'.$stylesheet.'">
 <meta name=viewport content="width=device-width, initial-scale=1">
 <script type="text/javascript" src="scripts/jquery.js"></script>
 <script type="text/javascript" src="scripts/script.js"></script>';
