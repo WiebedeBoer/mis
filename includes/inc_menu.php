@@ -16,7 +16,7 @@ $page_cat_id = $row_pagf["ID"];
 
 echo '<ul class="sidenav">';
 
-$mquery = "SELECT * FROM Webcontent";
+$mquery = "SELECT * FROM Webcontent WHERE Zichtbaar ='1' ORDER BY Volgorde DESC, ID ASC";
 $result_pagf = $conn->query($mquery);
 while ($row_pagf = $result_pagf->fetch_assoc())
   {
@@ -28,7 +28,7 @@ $page_cat_id = $row_pagf["ID"];
 if ($row_pagf["URL"] ==$page_url){
 
 echo '
-<li><a href="'.$row_pagf["URL"].'" title="'.$row_pagf["Pagina"].'" class="active">
+<li><a href="'.$row_pagf["URL"].'" title="'.$row_pagf["Pagina"].'" class="active" id="activebtn">
 '.$row_pagf["Pagina"].'
 </a></li>';
 
