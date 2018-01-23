@@ -24,7 +24,8 @@ if (($_FILES["file"]["type"] == "image/gif") || ($_FILES["file"]["type"] == "ima
      {
        $rfilename = $_FILES["file"]["name"];
        $qfilename = str_replace("'","_",$rfilename);
-       $_FILES["file"]["name"] = $qfilename;
+       $sfilename = str_replace(" ","_",$qfilename);
+       $_FILES["file"]["name"] = $sfilename;
      echo "<P>Upload: " . $_FILES["file"]["name"] . "</P>";
      echo "<P>Bestandstype: " . $_FILES["file"]["type"] . "</P>";
      echo "<P>Grootte: " . ($_FILES["file"]["size"] / 1024) . " Kb</P>";
