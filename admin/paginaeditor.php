@@ -114,7 +114,7 @@ echo "<P class='error'>Tekst kwam niet door filter</P>";
 
 
 
-if (isset($_POST["decription"]) && isset($_POST["searchterms"]) ){
+if (isset($_POST["description"]) && isset($_POST["searchterms"]) ){
 $new_dexription = $_POST["description"];
 $new_searchterms = $_POST["searchterms"];
 

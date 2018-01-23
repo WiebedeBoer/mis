@@ -362,8 +362,14 @@ echo "<input type='submit' value='wijzig'></P></FORM>";
 }
 
 
+$cuquery = "SELECT COUNT(*) AS usercheck FROM Users";
+$cuid = $conn->prepare($cuquery);
+$cuid->execute();
+$cuid->bind_result($usercheck);
+$cuid->close();
+
 /*overzicht*/
-if ($catcheck >=1){
+if ($usercheck >=1){
 echo "<table border='0' class='tabel'>
 <tr><th>Gebruikersnaam</th><th>Gebruikerstype</th><th>Wachtwoord</th><th>Verwijderknop</th></tr>";
 /*
