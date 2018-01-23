@@ -87,8 +87,8 @@ $bannier_text = $rowpho['Bannier'];
 echo '<FORM method="post" action="banner.php" id="myform" name="myform">';
 echo '<table><tr><th>Banner:</th><th> <input type="text" name="bannier" value="'.$bannier_text.'"></th></tr>
 <tr><td>Width:</td><td> <input type="text" name="width" value="'.$bannier_width.'"></td></tr>
-<tr><td>Height:</td><td <input type="text" name="height" value="'.$bannier_height.'"></td></tr>
-<tr><td><input type="submit" value="update" class="knop"></td></table>
+<tr><td>Height:</td><td><input type="text" name="height" value="'.$bannier_height.'"></td></tr>
+<tr><td colspan="2"><input type="submit" value="update" class="knop"></td></table>
 </FORM>';
 
 
