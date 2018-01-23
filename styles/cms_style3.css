@@ -85,3 +85,9 @@ div.remi {margin-left:10px; margin-top:10px; margin-bottom:10px; width:700px; bo
 border-width: 1px; border-color: #00a4fc; color: #323232;}
 .rem {font-family: Verdana; border-style: solid;
 border-width: 1px; border-color: #00a4fc; color: #ff0000;}
+
+/*banner.php*/
+#myform{
+        margin-left:5%;
+}
+
