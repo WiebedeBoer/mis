@@ -18,6 +18,17 @@ if ($connected ==1){
 
 if ($user_cat =="superadmin" || $user_cat =="admin"){
 
+if (isset($_POST["style"]) && filter_var($_POST["style"], FILTER_SANITIZE_STRING)){
+
+        $style = $_POST["style"];
+        $query = "UPDATE SEO SET style=?";
+        $qstyle = $conn->prepare($query);    
+        $qstyle->bind_param('s', $style);
+        $qstyle->execute();
+        $qstyle->close();
+        echo 'Stylesheer successvol geupdate na > '.$style;
+    }
+    
 //select
 $cquery = "SELECT Style FROM Seo WHERE ID = '1'";
 $cid = $conn->prepare($cquery);
@@ -26,8 +37,31 @@ $cid->bind_result($stylesheet);
 $cid->fetch();
 $cid->close();
 
+if ($stylesheet == "") {
+    echo '<p style="color:red">GEEN STYLESHEET IS GEDEFINEERD, VERANDER DIT SNEL</p>';
+    echo '<br/>';
+}
+$files = glob('../styles/*.css');
+$files = str_replace('../styles/','', $files);
+echo '<form action="styling.php" method="post">';
+echo '<select name="style">';
+    echo '<option value="'.$stylesheet.'" selected>'.$stylesheet.'</option>';
+    foreach($files as $value){
+        if ($stylesheet != $value){
+            echo'<option value="'.$value.'">'.$value.'</option>';
+        }
+    }
+echo '</select>';
+
+echo '<br/>';
+echo '<button>save</button>';
+
+}else {
+    echo 'jij mag hier niet zijn. wegwezen';
 }
 
+}else {
+    echo 'Dikke error. zoek contact met uw syteem beheerder.';
 }
 
 ?>
