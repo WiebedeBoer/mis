@@ -24,6 +24,8 @@ $cid->execute();
 $cid->bind_result($describe_title, $describe_text, $searchterms_text, $stylesheet);
 $cid->fetch();
 $cid->close();
+if ($beschrijving != "leeg" && $beschrijving != $describe_text){$describe_text = $beschrijving;}
+if ($zoektermen != "leeg" && $searchterms_text != $describe_text){$searchterms_text = $zoektermen;}
 //close connection
 //$conn->close();
 //var_dump($stylesheet);
