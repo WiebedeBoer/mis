@@ -117,14 +117,14 @@ $Allowlogin = 11;
 }
 else {
     //Brutecheck
-    $cbquery = "SELECT COUNT(*) AS usernamecount FROM BRUTE WHERE User = ?";
+    $cbquery = "SELECT COUNT(*) AS usernamecount FROM Brute WHERE User = ?";
     $cbch = $conn->prepare($cbquery);
     $cbch->bind_param('s', $username);
     $cbch->bind_result($usernamecount);
     $cbch->execute();
     $cbch->close();
     if($usernamecount ==0){
-        $bquery = "INSERT INTO BRUTE (User, block_time) VALUES (?, NOW())";
+        $bquery = "INSERT INTO Brute (User, block_time) VALUES (?, NOW())";
         $bch = $conn->prepare($bquery);
         $bch->bind_param('s', $username);
         $bch->execute();
@@ -142,8 +142,6 @@ else {
             $buu->execute();
             $buu->close();
         }
-
-
 $Allowlogin = 10;
 }
 }
