@@ -170,7 +170,7 @@ $modurl = str_replace("../",$newdomein,$photourl);
 $rerurl = str_replace(" ","%20",$modurl);
 $reurl = str_replace("[quot]","'",$rerurl);
 
-echo "<tr><td class='nowr'>".$reurl."</td><td class='nowr'><A HREF='../pictures/".$showname."' target='_blank' class='notext'>".$showname."</A></td><td class='nowr'>".$photowidth."</td><td class='nowr'>".$photoheight."</td><td class='nowr'>".$photosize."</td><td><FORM method='POST' action='fotos.php'><INPUT type='hidden' value='".$photoid."' name='deletion'><INPUT type='submit' value='verwijder'></FORM></td></tr>";
+echo "<tr><td class='nowr'>".$reurl."</td><td class='nowr'><A style='color:blue' HREF='../pictures/".$showname."' target='_blank' class='notext'>".$showname."</A></td><td class='nowr'>".$photowidth."</td><td class='nowr'>".$photoheight."</td><td class='nowr'>".$photosize."</td><td><FORM method='POST' action='fotos.php'><INPUT type='hidden' value='".$photoid."' name='deletion'><INPUT type='submit' value='verwijder'></FORM></td></tr>";
   }
 
 echo "</table>";
@@ -204,7 +204,7 @@ $modurl = str_replace("../",$newdomein,$photourl);
 $rerurl = str_replace(" ","%20",$modurl);
 $reurl = str_replace("[quot]","'",$rerurl);
 //$reurl = "../".$photourl;
-echo "<tr><td class='nowr'>".$reurl."</td><td class='nowr'><A HREF='../pictures/".$showname."' target='_blank' class='notext'>".$showname."</A></td><td class='nowr'>".$photowidth."</td><td class='nowr'>".$photoheight."</td><td class='nowr'>".$photosize."</td><td><FORM method='POST' action='fotos.php'><INPUT type='hidden' value='".$photoid."' name='deletion'><INPUT type='submit' value='verwijder'></FORM></td></tr>";
+echo "<tr><td class='nowr'>".$reurl."</td><td class='nowr'><A style='color:blue' HREF='../pictures/".$showname."' target='_blank' class='notext'>".$showname."</A></td><td class='nowr'>".$photowidth."</td><td class='nowr'>".$photoheight."</td><td class='nowr'>".$photosize."</td><td><FORM method='POST' action='fotos.php'><INPUT type='hidden' value='".$photoid."' name='deletion'><INPUT type='submit' value='verwijder'></FORM></td></tr>";
   }
 
 echo "</table>";
