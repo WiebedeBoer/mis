@@ -19,14 +19,23 @@ if ($install_step ==1){
 
 
 if (isset($_POST["server"]) && isset($_POST["dbname"]) && isset($_POST["user"]) && isset($_POST["pass"])) {
-if (filter_var($_POST["server"], FILTER_SANTITIZE_STRING)){
-if (filter_var($_POST["dbname"], FILTER_SANTITIZE_STRING)){
-if (filter_var($_POST["user"], FILTER_SANTITIZE_STRING)){
-if (filter_var($_POST["pass"], FILTER_SANTITIZE_STRING)){
-$servertype = $_POST['server'];
-$dbname = $_POST['dbname'];
-$username = $_POST['user'];
-$password = $_POST['pass'];
+
+$servertype = $_POST["server"];
+$dbname = $_POST["dbname"];
+$username = $_POST["user"];
+$password = $_POST["pass"];
+
+/*
+if (filter_var($servertype, FILTER_SANTITIZE_STRING)){
+if (filter_var($dbname, FILTER_SANTITIZE_STRING)){
+if (filter_var($username, FILTER_SANTITIZE_STRING)){
+if (filter_var($password, FILTER_SANTITIZE_STRING)){
+*/
+
+if (filter_var($servertype, FILTER_SANITIZE_STRING)){
+if (filter_var($dbname, FILTER_SANITIZE_STRING)){
+if (filter_var($username, FILTER_SANITIZE_STRING)){
+if (filter_var($password, FILTER_SANITIZE_STRING)){
 
 $write_txt = '<?php
 //DATABASE CONNECTION VARIABLES
@@ -43,10 +52,10 @@ fclose($myfile);
 echo '<p>Proceed to next step.</p>';
 
 echo '<form method="Post" action="install.php?step=2">
-<br>Username: <input type="text" size=20 maxlength=20 name="user">
-<br>Password: <input type="text" size=20 maxlength=20 name="pass">
-<br>Website Domain: <input type="text" size=20 maxlength=20 name="domein">
-<br>Contact Emailaddress: <input type="text" size=20 maxlength=20 name="contact">
+<br>Username: <input type="text" size=20 maxlength=80 name="user">
+<br>Password: <input type="text" size=20 maxlength=80 name="pass">
+<br>Website Domain: <input type="text" size=20 maxlength=80 name="domein">
+<br>Contact Emailaddress: <input type="text" size=20 maxlength=80 name="contact">
 <INPUT type="Submit" value="create">
 </form>';
 
@@ -58,6 +67,14 @@ echo '<form method="Post" action="install.php?step=2">
 
 }
 
+echo '<form method="Post" action="install.php?step=2">
+<br>Username: <input type="text" size=20 maxlength=80 name="user">
+<br>Password: <input type="text" size=20 maxlength=80 name="pass">
+<br>Website Domain: <input type="text" size=20 maxlength=80 name="domein">
+<br>Contact Emailaddress: <input type="text" size=20 maxlength=80 name="contact">
+<INPUT type="Submit" value="create">
+</form>';
+
 
 
 }
@@ -67,14 +84,21 @@ elseif ($install_step ==2){
 
 
 if (isset($_POST["user"]) && isset($_POST["pass"]) && isset($_POST["domein"]) && isset($_POST["contact"])) {
-if (filter_var($_POST["user"], FILTER_SANTITIZE_STRING)){
-if (filter_var($_POST["pass"], FILTER_SANTITIZE_STRING)){
-if (filter_var($_POST["domein"], FILTER_VALIDATE_URL)){
-if (filter_var($_POST["contact"], FILTER_VALIDATE_EMAIL)){
-$username = $_POST['user'];
-$password = $_POST['pass'];
-$domein = $_POST['domein'];
-$contactadres = $_POST['contact'];
+$username = $_POST["user"];
+$password = md5($_POST["pass"]);
+$domein = $_POST["domein"];
+$contactadres = $_POST["contact"];
+echo $username."<br>";
+echo $password."<br>";
+echo $domein."<br>";
+echo $contactadres."<br>";
+if (filter_var($username, FILTER_SANITIZE_STRING)){
+/*
+if (filter_var($password, FILTER_SANTITIZE_STRING)){
+*/
+if (filter_var($domein, FILTER_VALIDATE_URL)){
+if (filter_var($contactadres, FILTER_VALIDATE_EMAIL)){
+
 
 include("includes/connect.php");
 
@@ -87,7 +111,7 @@ echo '<P class="error">Could not select database. Have you forgot to change the 
   }
 else {
 
-
+/*
 $cquery = "SELECT COUNT(*) AS usercheck FROM Users";
 $cid = $conn->prepare($cquery);
 $cid->execute();
@@ -97,14 +121,16 @@ $cid->close();
 
 if ($usercheck <1){
 
-/*
+*/
+
+echo 'start install';
 
 //tabellen installeren
 $bquery = "CREATE TABLE `Bestanden` (`ID` int(11) NOT NULL AUTO_INCREMENT,  PRIMARY KEY(ID), `URL` varchar(240) NOT NULL)";
 $bid = $conn->prepare($bquery);
 $bid->execute();
 $bid->close();
-$cquery = "CREATE TABLE `Brute` (`ID` int(11) NOT NULL AUTO_INCREMENT,  PRIMARY KEY(ID), `User` varchar(80) NOT NULL, `time_block` datetime(6) NOT NULL, `tries` int(1) NOT NULL)";
+$cquery = "CREATE TABLE `Brute` (`ID` int(11) NOT NULL AUTO_INCREMENT,  PRIMARY KEY(ID), `User` varchar(80) NOT NULL, UNIQUE KEY `User` (`User`), `block_time` datetime NOT NULL, `tries` int(1) NOT NULL)";
 $cid = $conn->prepare($cquery);
 $cid->execute();
 $cid->close();
@@ -116,7 +142,7 @@ $dquery = "CREATE TABLE `Photos` (`ID` int(11) NOT NULL AUTO_INCREMENT,  PRIMARY
 $did = $conn->prepare($dquery);
 $did->execute();
 $did->close();
-$equery = "CREATE TABLE `Seo` (`ID` int(1) NOT NULL AUTO_INCREMENT,  PRIMARY KEY(ID),  `Titel` varchar(80) NOT NULL, `Beschrijving` varchar(200) NOT NULL, `Zoektermen` varchar(240) NOT NULL, `Bannier` varchar(240) NOT NULL, `Contact` varchar(80) NOT NULL, `Style` varchar(240) NOT NULL, `Width` varchar(240) NOT NULL DEFAULT '1', `Height` varchar(240) NOT NULL DEFAULT '1')";
+$equery = "CREATE TABLE `Seo` (`ID` int(1) NOT NULL AUTO_INCREMENT,  PRIMARY KEY(ID),  `Domein` varchar(240) NOT NULL,  `Titel` varchar(80) NOT NULL, `Beschrijving` varchar(200) NOT NULL, `Zoektermen` varchar(240) NOT NULL, `Bannier` varchar(240) NOT NULL, `Contact` varchar(80) NOT NULL, `Style` varchar(240) NOT NULL, `Width` varchar(240) NOT NULL DEFAULT '1', `Height` varchar(240) NOT NULL DEFAULT '1')";
 $eid = $conn->prepare($equery);
 $eid->execute();
 $eid->close();
@@ -124,7 +150,7 @@ $oquery = "CREATE TABLE `Sitemap` (`ID` int(1) NOT NULL AUTO_INCREMENT,  PRIMARY
 $oid = $conn->prepare($oquery);
 $oid->execute();
 $oid->close();
-$fquery = "CREATE TABLE `Users` (`ID` int(11) NOT NULL AUTO_INCREMENT,  PRIMARY KEY(ID), `Username` varchar(40) NOT NULL, `Password` varchar(20) NOT NULL, `Category` varchar(20) NOT NULL, `Cokey` varchar(20) NOT NULL DEFAULT '0')";
+$fquery = "CREATE TABLE `Users` (`ID` int(11) NOT NULL AUTO_INCREMENT,  PRIMARY KEY(ID), `Username` varchar(80) NOT NULL, `Password` varchar(240) NOT NULL, `Category` varchar(20) NOT NULL, `Cokey` varchar(20) NOT NULL DEFAULT '0')";
 $fid = $conn->prepare($fquery);
 $fid->execute();
 $fid->close();
@@ -146,37 +172,46 @@ $kquery = "INSERT INTO `Webcontent` (`ID`, `Pagina`, `URL`, `Tekst`, `Verwijderb
 $kid = $conn->prepare($kquery);
 $kid->execute();
 $kid->close();
-$pquery = "INSERT INTO `Webcontent` (`ID`, `Pagina`, `URL`, `Tekst`, `Verwijderbaar`, `Zichtbaar`) VALUES (3, 'Over Ons', 'over_ons.php', 'leeg ', 0, 1)";
-$pid = $conn->prepare($pquery);
-$pid->execute();
-$pid->close();
+$poquery = "INSERT INTO `Webcontent` (`ID`, `Pagina`, `URL`, `Tekst`, `Verwijderbaar`, `Zichtbaar`) VALUES (4, 'Over Ons', 'over_ons.php', 'leeg ', 0, 1)";
+$poid = $conn->prepare($poquery);
+$poid->execute();
+$poid->close();
 
-$lquery = "INSERT INTO `Seo` (`ID`, `Domein`, `Titel`, `Beschrijving`, `Zoektermen`, `Bannier`, `Style`) VALUES (0, ?, 'Test', 'leeg', 'leeg', 'leeg.png', ?, 'styles')";
-$lid = $conn->prepare($lquery);
-$lid->bind_param('ss', $domein, $conntactadres);
-$lid->execute();
-$lid->close();
+echo 'inserted pages<br>';
 
-$nquery = "INSERT INTO `Sitemap` (`ID`, `URL`, `Freq`) VALUES ('index.php', 'monthly')";
+$nquery = "INSERT INTO `Sitemap` (`ID`, `URL`, `Freq`) VALUES ('1', 'index.php', 'monthly')";
 $nid = $conn->prepare($nquery);
 $nid->execute();
 $nid->close();
 
+echo 'inserted sitemap<br>';
+
+$lquery = "INSERT INTO `Seo` (`ID`, `Domein`, `Titel`, `Beschrijving`, `Zoektermen`, `Bannier`, `Contact`, `Style`) VALUES ('1', ?, 'Test', 'leeg', 'leeg', 'leeg.png', ?, 'styles.css')";
+$lid = $conn->prepare($lquery);
+$lid->bind_param('ss', $domein, $contactadres);
+$lid->execute();
+$lid->close();
+
+echo 'inserted seo<br>';
+
 //gebruiker inserteren
-$mquery = "INSERT INTO `Users` (`ID`, `Username`, `Password`, `Category`, `Cokey`) VALUES
-(1, ?, ?, 'superadmin', '0')";
+$mquery = "INSERT INTO `Users` (`ID`, `Username`, `Password`, `Category`, `Cokey`) VALUES (1, ?, ?, 'superadmin', '0')";
 $mid = $conn->prepare($mquery);
 $mid->bind_param('ss', $username, $password);
 $mid->execute();
 $mid->close();
 
+echo 'inserted admin user<br>';
+
 //xml writer
 
-$write_txt '&lt;urlset&gt;';
 
-$write_txt= $write_txt.'&lt;url>
+
+$write_txt = '&lt;urlset&gt;';
+
+$write_txt= $write_txt.'&lt;url&gt;
 &lt;loc&gt;'.$domein.'/&lt;/loc&gt;
-&lt;lastmod>'.date("Y").'-'.date("m").'-'.date("d").'T'.date("H").':'.date("i").':'.date("s").'+00:00&lt;/lastmod&gt;
+&lt;lastmod&gt;'.date("Y").'-'.date("m").'-'.date("d").'T'.date("H").':'.date("i").':'.date("s").'+00:00&lt;/lastmod&gt;
 &lt;changefreq>monthly&lt;/changefreq&gt;
 &lt;/url&gt;';
 
@@ -188,14 +223,15 @@ fclose($myfile);
 
 //finished step display message
 
-echo '<p>data installed. Proceed to <a href="uninstall.php">final step</a>.</p>';
+echo '<p>data installed. Do NOT forget delete install file.</p>';
 
-*/
 
+/*
 }
 else {
 echo '<p class="error">already installed</p>';
 }
+*/
 
 }
 
@@ -207,10 +243,12 @@ echo '<p class="error">invalid emailaddress</p>';
 else {
 echo '<p class="error">invalid domain</p>';
 }
+/*
 }
 else {
 echo '<p class="error">invalid password</p>';
 }
+*/
 }
 else {
 echo '<p class="error">invalid username</p>';
