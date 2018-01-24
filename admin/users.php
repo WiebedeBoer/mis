@@ -49,6 +49,7 @@ $cid = $conn->prepare($ccquery);
 $cid->bind_param('s', $you);
 $cid->execute();
 $cid->bind_result($tab_old_pw);
+$cid->fetch();
 $cid->close();
 
 if ($tab_old_pw =="$old_pass"){
@@ -271,6 +272,7 @@ $cid = $conn->prepare($ccquery);
 $cid->bind_param('i', $usersid);
 $cid->execute();
 $cid->bind_result($catcheck);
+$cid->fetch();
 $cid->close();
 
 if ($catcheck ==1){
@@ -343,6 +345,7 @@ $cocatquery = "SELECT COUNT(*) AS catcheck FROM Users WHERE Category <>'superadm
 $cocatid = $conn->prepare($cocatquery);
 $cocatid->execute();
 $cocatid->bind_result($catcheck);
+$cocatid->fetch();
 $cocatid->close();
 
 
@@ -378,6 +381,7 @@ $cuquery = "SELECT COUNT(*) AS usercheck FROM Users";
 $cuid = $conn->prepare($cuquery);
 $cuid->execute();
 $cuid->bind_result($usercheck);
+$cuid->fetch();
 $cuid->close();
 
 /*overzicht*/
