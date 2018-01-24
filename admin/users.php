@@ -190,16 +190,27 @@ $newuser = $_POST["username"];
 $newusertype = $_POST["usertype"];
 
 $newpassword = md5($_POST["userpass"]);
-/*
-mysql_query("INSERT INTO Users (Username, Password, Category)
-VALUES ('$newuser', '$newpassword', '$newusertype')");
-*/
+
+$cquery = "SELECT COUNT(*) AS usernamecheck FROM Users WHERE Username = ?";
+$cid = $conn->prepare($cquery);
+$cid->bind_param('s', $newuser);
+$cid->execute();
+$cid->bind_result($usernamecheck);
+$cid->fetch();
+$cid->close();
+
+if($usernamecheck == 0) {
+    
+
+
 $iquery = "INSERT INTO Users (Username, Password, Category) VALUES (?, ?, ?)";
 $iid = $conn->prepare($iquery);
 $iid->bind_param('sss', $newuser, $newpassword, $newusertype);
 $iid->execute();
 $iid->close();
-
+}else {
+    echo "Gebruikersnaam is al in gebruik";
+}
 echo "<P>Gebruiker is toegevoegd</P>";
 
 }
