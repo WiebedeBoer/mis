@@ -50,13 +50,13 @@ else {
 mysql_query("DELETE FROM Webcontent WHERE ID ='$deletor'");
 */
 
-$dquery = "SELECT COUNT(*) AS catcount, Verwijderbaar FROM Webcontent WHERE ID = ?";
+$dquery = "DELETE FROM Webcontent WHERE ID = ?";
 $did = $conn->prepare($dquery);
 $did->bind_param('i', $deletor);
 $did->execute();
 $did->close();
 
-echo "<P>".$weburl." pagina is verwijderd</P>";
+echo "<P>pagina is verwijderd</P>";
 }
 
 
@@ -86,7 +86,18 @@ $pagename = $_POST["makepage"];
 $enpage = $_POST["enpage"];
 $taal = $_POST["taal"];
 
-$extraurl ="extra.php?extra=";
+
+
+$dmquery = "SELECT MAX(ID) AS maxid FROM Webcontent";
+$dmid = $conn->prepare($dmquery);
+$dmid->bind_result($maxid);
+$dmid->execute();
+$dmid->fetch();
+$dmid->close();
+
+$newid = $maxid + 1;
+
+$extraurl ="extra.php?extra=".$newid;
 
 /*
 mysql_query("INSERT INTO Webcontent (Pagina, Tekst, Verwijderbaar, URL)
