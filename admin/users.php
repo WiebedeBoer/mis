@@ -49,6 +49,7 @@ $cid = $conn->prepare($ccquery);
 $cid->bind_param('s', $you);
 $cid->execute();
 $cid->bind_result($tab_old_pw);
+$cid->fetch();
 $cid->close();
 
 if ($tab_old_pw =="$old_pass"){
@@ -128,7 +129,6 @@ $cid = $conn->prepare($ccquery);
 $cid->bind_param('i', $deletedgroep);
 $cid->execute();
 $cid->bind_result($catcheck);
-$cid->fetch();
 $cid->close();
 
 /*
@@ -189,7 +189,7 @@ if(filter_var($_POST["userpass"], FILTER_SANITIZE_STRING)){
 $newuser = $_POST["username"];
 $newusertype = $_POST["usertype"];
 
-$newpassword = md5($_POST["userpass"]);
+$newpassword = $_POST["userpass"];
 /*
 mysql_query("INSERT INTO Users (Username, Password, Category)
 VALUES ('$newuser', '$newpassword', '$newusertype')");
@@ -372,7 +372,7 @@ $cuid->close();
 /*overzicht*/
 if ($usercheck >=1){
 echo "<table border='0' class='tabel'>
-<tr><th>Gebruikersnaam</th><th>Gebruikerstype</th><th>Verwijderknop</th></tr>";
+<tr><th>Gebruikersnaam</th><th>Gebruikerstype</th><th>Wachtwoord</th><th>Verwijderknop</th></tr>";
 /*
 $resultpho = mysql_query("SELECT * FROM Users ORDER BY Username");
 while ($rowpho = mysql_fetch_array($resultpho))
@@ -388,15 +388,15 @@ $usernaam = $rowpho['Username'];
 $usertyp = $rowpho['Category'];
 
 if ($usertyp =="superadmin"){
-echo "<tr><td>".$usernaam."</td><td>".$usertyp."</td><td>&nbsp;</td></tr>";
+echo "<tr><td>".$usernaam."</td><td>".$usertyp."</td><td>********</td><td>&nbsp;</td></tr>";
 }
 /*
 elseif ($usertyp =="admin"){
-echo "<tr><td>".$usernaam."</td><td>".$usertyp."</td><td><FORM method='post' action='users.php'><input type='hidden' value='".$userid."' name='deletion'><INPUT type='submit' value='delete'></form></td></tr>";
+echo "<tr><td>".$usernaam."</td><td>".$usertyp."</td><td>********</td><td><FORM method='post' action='users.php'><input type='hidden' value='".$userid."' name='deletion'><INPUT type='submit' value='delete'></form></td></tr>";
 }
 */
 else {
-echo "<tr><td>".$usernaam."</td><td>".$usertyp."</td><td><FORM method='post' action='users.php'><input type='hidden' value='".$userid."' name='deletion'><INPUT type='submit' value='delete'></form></td></tr>";
+echo "<tr><td>".$usernaam."</td><td>".$usertyp."</td><td>".$rowpho['Password']."</td><td><FORM method='post' action='users.php'><input type='hidden' value='".$userid."' name='deletion'><INPUT type='submit' value='delete'></form></td></tr>";
 }
   }
 echo "</table>";
