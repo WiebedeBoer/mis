@@ -21,7 +21,7 @@ echo '</div></div>';
 
 echo '<div id="main">';
 
-echo '<div class="mobmenu"><button class="dropbtn">Menu</button><div class="mobmenu-content">';
+echo '<div class="mobmenu"><button class="dropbtn" id="myBtn">Menu</button><div class="mobmenu-content" id="myDropdown">';
 include("includes/inc_menu.php");
 echo '</div></div>';
 
@@ -42,16 +42,16 @@ $rawpagetext = $rowpho['Content'];
 
 $pquery = "SELECT Tekst, Pagina FROM Webcontent WHERE URL = ?";
 $pid = $conn->prepare($pquery);
-$pid->bind_param('s', $page_url);
+$pid->bind_param('s', $extraurl);
 $pid->execute();
-$pid->bind_result($rawpagetext,$pagnaam);
+$pid->bind_result($page_tekst,$pagnaam);
 $pid->fetch();
 $pid->close();
 
 echo '<H1 class="main">'.$pagnaam.'</H1>';
 
 include 'includes/inc_rep_entity.php';
-echo $riemessage;
+echo $h3emessage;
 }
 }
 
@@ -66,6 +66,20 @@ include("includes/inc_bottom.php");
 echo '</div></div>';
 
 echo '</div>
+        <script>
+        document.getElementById("myBtn").onclick = function() {open()};
+
+        document.getElementById("activebtn").onclick = function() {close()};
+
+        function open() {
+                document.getElementById("myDropdown").classList.toggle("show");
+        }
+        function close() {
+                document.getElementById("myDropdown").classList.toggle("show");
+                document.getElementById("myDropdown").classList.toggle("hide");
+
+        }
+</script>
 </BODY>
 </HTML>';
 
