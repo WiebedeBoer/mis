@@ -25,7 +25,6 @@ $newtext = $_POST["bannier"];
 $newwidth = $_POST["width"];
 $newheight = $_POST["height"];
 
-//var_dump($newwidth);
 
 $enttext = str_replace("&"," ",$newtext);
 $apotext = str_replace("'"," ",$enttext);

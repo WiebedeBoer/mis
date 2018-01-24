@@ -22,22 +22,20 @@ if ($user_cat =="superadmin" || $user_cat =="admin"){
 /*ONLY UPDATE*/
 if (isset($_POST["bannier"])){
 $newtext = $_POST["bannier"];
-
 $enttext = str_replace("&"," ",$newtext);
 $apotext = str_replace("'"," ",$enttext);
 $mod_text = str_replace('"',' ',$apotext);
-
 if (filter_var($mod_text, FILTER_SANITIZE_STRING)){
 /*
 mysql_query("UPDATE Seo SET Bannier ='$mod_text' WHERE ID ='1'");
 */
 $upquery = "UPDATE Seo SET Contact =? WHERE ID ='1'";
 $upid = $conn->prepare($upquery);
-$upid->bind_param('s', $modtext);
+$upid->bind_param('s', $mod_text);
 $upid->execute();
 $upid->close();
 
-echo "<P>SEO geupdate</P>";
+echo "<P>Contact adress successvol aangepast!</P>";
 
 }
 else {
