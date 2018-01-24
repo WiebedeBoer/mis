@@ -31,6 +31,7 @@ $cid = $conn->prepare($ccquery);
 $cid->bind_param('i', $verwijdersoort);
 $cid->execute();
 $cid->bind_result($bestand_loc);
+$cid->fetch();
 $cid->close();
 
 $fileurl = $_SERVER["DOCUMENT_ROOT"].$bestand_loc;
@@ -71,6 +72,7 @@ $ccquery = "SELECT COUNT(*) soortcheck FROM Bestanden";
 $cid = $conn->prepare($ccquery);
 $cid->execute();
 $cid->bind_result($soortcheck);
+$cid->fetch();
 $cid->close();
 
 if ($soortcheck >=1){

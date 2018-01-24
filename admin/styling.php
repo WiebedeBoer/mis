@@ -52,8 +52,6 @@ echo '<button>save</button>';
 }else {
     echo 'jij mag hier niet zijn. wegwezen';
 }
-}else {
-    echo 'Dikke error. zoek contact met uw syteem beheerder.';
 }
 ?>
 </BODY>

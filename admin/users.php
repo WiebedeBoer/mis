@@ -129,6 +129,7 @@ $cid = $conn->prepare($ccquery);
 $cid->bind_param('i', $deletedgroep);
 $cid->execute();
 $cid->bind_result($catcheck);
+$cid->fetch();
 $cid->close();
 
 /*
@@ -189,17 +190,28 @@ if(filter_var($_POST["userpass"], FILTER_SANITIZE_STRING)){
 $newuser = $_POST["username"];
 $newusertype = $_POST["usertype"];
 
-$newpassword = $_POST["userpass"];
-/*
-mysql_query("INSERT INTO Users (Username, Password, Category)
-VALUES ('$newuser', '$newpassword', '$newusertype')");
-*/
+$newpassword = md5($_POST["userpass"]);
+
+$cquery = "SELECT COUNT(*) AS usernamecheck FROM Users WHERE Username = ?";
+$cid = $conn->prepare($cquery);
+$cid->bind_param('s', $newuser);
+$cid->execute();
+$cid->bind_result($usernamecheck);
+$cid->fetch();
+$cid->close();
+
+if($usernamecheck == 0) {
+    
+
+
 $iquery = "INSERT INTO Users (Username, Password, Category) VALUES (?, ?, ?)";
 $iid = $conn->prepare($iquery);
 $iid->bind_param('sss', $newuser, $newpassword, $newusertype);
 $iid->execute();
 $iid->close();
-
+}else {
+    echo "Gebruikersnaam is al in gebruik";
+}
 echo "<P>Gebruiker is toegevoegd</P>";
 
 }
@@ -260,6 +272,7 @@ $cid = $conn->prepare($ccquery);
 $cid->bind_param('i', $usersid);
 $cid->execute();
 $cid->bind_result($catcheck);
+$cid->fetch();
 $cid->close();
 
 if ($catcheck ==1){
@@ -332,6 +345,7 @@ $cocatquery = "SELECT COUNT(*) AS catcheck FROM Users WHERE Category <>'superadm
 $cocatid = $conn->prepare($cocatquery);
 $cocatid->execute();
 $cocatid->bind_result($catcheck);
+$cocatid->fetch();
 $cocatid->close();
 
 
@@ -367,12 +381,13 @@ $cuquery = "SELECT COUNT(*) AS usercheck FROM Users";
 $cuid = $conn->prepare($cuquery);
 $cuid->execute();
 $cuid->bind_result($usercheck);
+$cuid->fetch();
 $cuid->close();
 
 /*overzicht*/
 if ($usercheck >=1){
 echo "<table border='0' class='tabel'>
-<tr><th>Gebruikersnaam</th><th>Gebruikerstype</th><th>Wachtwoord</th><th>Verwijderknop</th></tr>";
+<tr><th>Gebruikersnaam</th><th>Gebruikerstype</th><th>Verwijderknop</th></tr>";
 /*
 $resultpho = mysql_query("SELECT * FROM Users ORDER BY Username");
 while ($rowpho = mysql_fetch_array($resultpho))
@@ -388,15 +403,15 @@ $usernaam = $rowpho['Username'];
 $usertyp = $rowpho['Category'];
 
 if ($usertyp =="superadmin"){
-echo "<tr><td>".$usernaam."</td><td>".$usertyp."</td><td>********</td><td>&nbsp;</td></tr>";
+echo "<tr><td>".$usernaam."</td><td>".$usertyp."</td><td>&nbsp;</td></tr>";
 }
 /*
 elseif ($usertyp =="admin"){
-echo "<tr><td>".$usernaam."</td><td>".$usertyp."</td><td>********</td><td><FORM method='post' action='users.php'><input type='hidden' value='".$userid."' name='deletion'><INPUT type='submit' value='delete'></form></td></tr>";
+echo "<tr><td>".$usernaam."</td><td>".$usertyp."</td><td><FORM method='post' action='users.php'><input type='hidden' value='".$userid."' name='deletion'><INPUT type='submit' value='delete'></form></td></tr>";
 }
 */
 else {
-echo "<tr><td>".$usernaam."</td><td>".$usertyp."</td><td>".$rowpho['Password']."</td><td><FORM method='post' action='users.php'><input type='hidden' value='".$userid."' name='deletion'><INPUT type='submit' value='delete'></form></td></tr>";
+echo "<tr><td>".$usernaam."</td><td>".$usertyp."</td><td><FORM method='post' action='users.php'><input type='hidden' value='".$userid."' name='deletion'><INPUT type='submit' value='delete'></form></td></tr>";
 }
   }
 echo "</table>";

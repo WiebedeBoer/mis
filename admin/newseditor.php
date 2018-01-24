@@ -49,6 +49,7 @@ $cocatid = $conn->prepare($cocatquery);
 $cocatid->bind_param('i', $editor);
 $cocatid->execute();
 $cocatid->bind_result($catcheck);
+$cocatid->fetch();
 $cocatid->close();
 
 if ($catcheck ==1){
@@ -96,6 +97,7 @@ $cid = $conn->prepare($ccquery);
 $cid->bind_param('i', $editor);
 $cid->execute();
 $cid->bind_result($eventtitle,$evenement);
+$cid->fetch();
 $cid->close();
 
 echo "<FORM method='post' action='newseditor.php?edit=".$editor."'>";

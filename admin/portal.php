@@ -122,6 +122,7 @@ else {
     $cbch->bind_param('s', $username);
     $cbch->bind_result($usernamecount);
     $cbch->execute();
+    $cbch->fetch();
     $cbch->close();
     if($usernamecount ==0){
         $bquery = "INSERT INTO Brute (User, block_time) VALUES (?, NOW())";

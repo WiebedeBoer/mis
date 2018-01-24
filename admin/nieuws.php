@@ -69,7 +69,6 @@ VALUES ('$rawtitle', '$datum', '$modtext')");
         $iid = $conn->prepare($iquery);
         $iid->bind_param('sss', $rawtitle, $datum, $modtext);
         $iid->execute();
-        $iid->fetch();
         $iid->close();
 
 echo "<P class='zent'>Bericht gemaakt</P>";
@@ -119,7 +118,6 @@ $dequery = "DELETE FROM News WHERE ID = ?";
 $did = $conn->prepare($dequery);
 $did->bind_param('i', $deletor);
 $did->execute();
-$did->fetch();
 $did->close();
 
 echo "<P class='zent'>Nieuwsbericht is verwijderd</P>";
