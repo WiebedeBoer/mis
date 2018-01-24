@@ -16,15 +16,15 @@ echo '</HEAD>
 <BODY>
 <div class="body">';
 
-echo '<div class="top"><div class="header">';
+echo '<div id="top"><div id="header">';
 include("includes/inc_banner.php");
 echo '</div></div>';
 
-echo '<div class="main">';
+echo '<div id="main">';
 
-echo '<div class="mobmenu">';
+echo '<div class="mobmenu"><button class="dropbtn" id="myBtn">Menu</button><div class="mobmenu-content" id="myDropdown">';
 include("includes/inc_menu.php");
-echo '</div>';
+echo '</div></div>';
 
 echo '<div class="content">';
 
@@ -33,13 +33,27 @@ include("includes/inc_home.php");
 echo '</div>';
 echo '</div>';
 
-echo '<div class="bottom"><div id="footer">';
+echo '<div id="bottom"><div id="footer">';
 
 include("includes/inc_bottom.php");
 
 echo '</div></div>';
 
 echo '</div>
+        <script>
+        document.getElementById("myBtn").onclick = function() {open()};
+
+        document.getElementById("activebtn").onclick = function() {close()};
+
+        function open() {
+                document.getElementById("myDropdown").classList.toggle("show");
+        }
+        function close() {
+                document.getElementById("myDropdown").classList.toggle("show");
+                document.getElementById("myDropdown").classList.toggle("hide");
+
+        }
+</script>
 </BODY>
 </HTML>';
 

@@ -21,7 +21,7 @@ echo '</div></div>';
 
 echo '<div id="main">';
 
-echo '<div class="mobmenu"><button class="dropbtn">Menu</button><div class="mobmenu-content">';
+echo '<div class="mobmenu"><button class="dropbtn" id="myBtn">Menu</button><div class="mobmenu-content" id="myDropdown">';
 include("includes/inc_menu.php");
 echo '</div></div>';
 
@@ -45,6 +45,20 @@ echo '</div></div>';
 
 
 echo '</div>
+        <script>
+        document.getElementById("myBtn").onclick = function() {open()};
+
+        document.getElementById("activebtn").onclick = function() {close()};
+
+        function open() {
+                document.getElementById("myDropdown").classList.toggle("show");
+        }
+        function close() {
+                document.getElementById("myDropdown").classList.toggle("show");
+                document.getElementById("myDropdown").classList.toggle("hide");
+
+        }
+</script>
 </BODY>
 </HTML>';
 }

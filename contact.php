@@ -13,21 +13,21 @@ include("includes/inc_head.php");
 
 echo '</HEAD>
 <BODY>
-<div class="page_full">';
+<div class="body">';
 
-echo '<div class="container_top">';
+echo '<div id="top"><div id="header">';
 include("includes/inc_banner.php");
-echo '</div>';
+echo '</div></div>';
 
-echo '<div class="container_menu">';
+echo '<div id="main">';
+
+echo '<div class="mobmenu"><button class="dropbtn" id="myBtn">Menu</button><div class="mobmenu-content" id="myDropdown">';
 include("includes/inc_menu.php");
-echo '</div>';
+echo '</div></div>';
 
-echo '<div class="container_main">';
+echo '<div class="content">';
 
 include("includes/inc_page.php");
-
-echo '</div>';
 
 echo '<div class="container_contact">';
 
@@ -35,15 +35,34 @@ include("includes/inc_contact_form.php");
 
 echo '</div>';
 
-echo '<div class="container_bottom">';
+echo '</div>';
+
+
+echo '</div>';
+
+echo '<div id="bottom"><div id="footer">';
 
 
 include("includes/inc_bottom.php");
 
-echo '</div>';
+echo '</div></div>';
 
 
 echo '</div>
+        <script>
+        document.getElementById("myBtn").onclick = function() {open()};
+
+        document.getElementById("activebtn").onclick = function() {close()};
+
+        function open() {
+                document.getElementById("myDropdown").classList.toggle("show");
+        }
+        function close() {
+                document.getElementById("myDropdown").classList.toggle("show");
+                document.getElementById("myDropdown").classList.toggle("hide");
+
+        }
+</script>
 </BODY>
 </HTML>';
 
